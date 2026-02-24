@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>מערכת השידוכים - הבית היהודי שלך</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;700;800&amp;family=Heebo:wght@400;500;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1e3a8a",
+                        secondary: "#fdfbf7",
+                        "background-light": "#fdfbf7",
+                        "background-dark": "#101622",
+                        accent: "#b45309",
+                    },
+                    fontFamily: {
+                        display: ["Assistant", "Heebo", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "0.75rem",
+                        xl: "1rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply font-display;
+            }
+        }
+        .blurred-modesty {
+            filter: blur(8px) grayscale(20%);
+        }
+        .shining-badge {
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+    <div class="relative flex min-h-screen w-full flex-col group/design-root">
+        <header
+            class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md px-6 lg:px-20 py-4 sticky top-0 z-50">
+            <div class="flex items-center gap-4 text-primary dark:text-white">
+                <div class="size-8 text-primary dark:text-white">
+                    <span class="material-symbols-outlined text-[32px]">synagogue</span>
+                </div>
+                <h2 class="text-primary dark:text-white text-xl font-bold leading-tight tracking-tight">מערכת השידוכים
+                </h2>
+            </div>
+            <div class="flex items-center gap-8">
+                <nav class="hidden md:flex items-center gap-9">
+                    <a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors"
+                        href="#">דף הבית</a>
+                    <a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors"
+                        href="#">איך זה עובד</a>
+                    <a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors"
+                        href="#">סיפורי הצלחה</a>
+                    <a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors"
+                        href="#">צור קשר</a>
+                </nav>
+                <button
+                    class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-6 bg-primary hover:bg-primary/90 text-white text-sm font-bold transition-colors shadow-sm">
+                    <span>כניסה למערכת</span>
+                </button>
+            </div>
+        </header>
+        <main class="flex-1">
+            <section class="@container">
+                <div class="@[480px]:p-6 lg:p-10 max-w-[1440px] mx-auto">
+                    <div class="relative flex min-h-[600px] lg:min-h-[650px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl lg:rounded-3xl items-center justify-center p-8 lg:p-16 overflow-hidden shadow-2xl"
+                        style='background-image: linear-gradient(rgba(16, 22, 34, 0.6) 0%, rgba(16, 22, 34, 0.8) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDV0_hqJt2DM69Dcz9h1RYN7YvjEqWHW9pO9_VQcrd0viFjIY7ka12Z_ZUvOgvOucfXSYUQ7XYSHoRtqQN0dO2xndzQvuy56wQ3Es_hmSR9kOW_SMloy432jw9O2SbcPzt5Hdg8ZhsR27pUI8c6FxMQNsqMUJSr6BhGizXJBY_qcqba-2mOR_Z8kBlFOZ8oZiayKXToNYjyNJRKluQMvAQywJx9rFwzWHOonRMluy4UA_VJ3dUjzH5eYjWN3uA9L1Sl8ee3CNknJpOH");'>
+                        <div class="relative z-20 mb-4 animate-bounce">
+                            <div
+                                class="flex flex-col items-center bg-white/10 backdrop-blur-md p-4 rounded-full border border-yellow-400/50 shadow-2xl shining-badge">
+                                <span class="material-symbols-outlined text-yellow-400 text-4xl mb-1">verified</span>
+                                <span class="text-white text-sm font-bold tracking-wide">מאושר ע"י רבנים</span>
+                            </div>
+                        </div>
+                        <div class="relative z-10 flex flex-col gap-4 text-center max-w-3xl">
+                            <span
+                                class="text-blue-200 font-medium tracking-wide text-sm lg:text-base border-b border-blue-200/30 pb-2 inline-block mx-auto">טכנולוגיה
+                                מתקדמת • הכוונה רבנית • פרטיות מוחלטת</span>
+                            <h1 class="text-white text-4xl font-black leading-tight lg:text-6xl drop-shadow-lg">
+                                השידוך הנכון מתחיל בלב חם ובליווי אישי
+                            </h1>
+                            <p
+                                class="text-slate-200 text-lg font-normal leading-relaxed lg:text-xl lg:leading-relaxed max-w-2xl mx-auto">
+                                שילוב ייחודי של בינה מלאכותית עם מסירות של שדכנים מנוסים, למציאת הבאשערט שלך בכבוד,
+                                בדיסקרטיות ועל פי דעת תורה.
+                            </p>
+                        </div>
+                        <div class="relative z-10 flex flex-col sm:flex-row gap-4 mt-8">
+                            <button
+                                class="flex min-w-[200px] cursor-pointer items-center justify-center rounded-lg h-14 px-8 bg-primary hover:bg-primary/90 text-white text-lg font-bold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                                התחילו את המסע שלכם
+                            </button>
+                            <button
+                                class="flex min-w-[200px] cursor-pointer items-center justify-center rounded-lg h-14 px-8 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white text-lg font-bold transition-all">
+                                למידע על הפיקוח ההלכתי
+                            </button>
+                        </div>
+                        <div class="absolute bottom-8 z-10 flex items-center gap-3 text-white/80 text-sm">
+                            <span class="material-symbols-outlined text-green-400">shield_lock</span>
+                            <span>מאובטח בסטנדרט החמיר ביותר לשמירת פרטיותכם</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-16 bg-white dark:bg-slate-900 border-y border-slate-100 dark:border-slate-800">
+                <div class="max-w-[1200px] mx-auto px-6 lg:px-20">
+                    <div class="flex justify-between items-end mb-12">
+                        <div class="max-w-xl">
+                            <div class="flex items-center gap-2 mb-2 text-primary font-bold">
+                                <span class="material-symbols-outlined">auto_awesome</span>
+                                <span>בסיעתא דשמיא</span>
+                            </div>
+                            <h2 class="text-primary dark:text-white text-3xl font-bold leading-tight mb-2">בתים שנבנו
+                                דרכנו</h2>
+                            <p class="text-slate-600 dark:text-slate-400">זוגות יקרים שמצאו את זיווגם תוך ליווי אישי
+                                ורגיש.</p>
+                        </div>
+                        <div class="hidden md:flex gap-2">
+                            <button
+                                class="p-3 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
+                            <button
+                                class="p-3 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                <span class="material-symbols-outlined">arrow_back</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="flex flex-col group cursor-default">
+                            <div class="overflow-hidden rounded-2xl mb-4 relative aspect-[3/4] bg-slate-100">
+                                <div class="absolute inset-0 bg-cover bg-center blurred-modesty"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCA6kEfaah3AXj1E5cuMqqhTknLdkj76vVXGJS1KTQ7NKK5KcSlE-Umwf_4qJ8-wIj2hVxXRL42bDbTRj58tweaFn17Zv8sTFFopNJE5IwME53dD0K-siUyDUCsfnFrjGTKKEbgr8pXE2EoJVJF7quapHYJMQqIAmYd9v1QZAibCRVhLfK1NIGhYdvkvaiAIb6Ple1Crs5E0u3LZzVgTRW_qQ950xaZJtePmL1nR3pZotB-i0AGUHKuSfCyHve0_9h6JUf_HRD_kU23");'>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 right-4 left-4 text-white text-center">
+                                    <span
+                                        class="text-xs font-bold bg-white/20 backdrop-blur-md px-3 py-1 rounded-full mb-2 inline-block">נשואים
+                                        בשעה טובה</span>
+                                </div>
+                            </div>
+                            <h3 class="text-slate-900 dark:text-white text-lg font-bold text-center">משפחת א.</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm text-center italic mt-2">"השדכנית
+                                ליוותה אותנו בכל התלבטות, תמיד עם המילה הנכונה והכוונה מדויקת."</p>
+                        </div>
+                        <div class="flex flex-col group cursor-default">
+                            <div class="overflow-hidden rounded-2xl mb-4 relative aspect-[3/4] bg-slate-100">
+                                <div class="absolute inset-0 bg-cover bg-center blurred-modesty"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCtGR3s0uLD50psDvhUhdrf9M7PXFvRK9LbOQH5zL7hI5liWAf3dyU5xvf-4-9xS2uPSzLWaql3Lr2M90xf4d6UaXDMEjPpoYPd_dCfHLx1YRxReLxg2qV9UDr3mKUXSGPraVVPho4FyxHPccDiuBMI_MWW6KMSRxNO27rC-e0JZpwZDiHh8wK1tlI3e-ZdpvsNS7IfTnQo-SO1esjaoMyt1HoIi4Hl-jWkPOIbtEvEmqlD6m5BLQjjWWZ777utUD3z4_vD9PmrUVSJ");'>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 right-4 left-4 text-white text-center">
+                                    <span
+                                        class="text-xs font-bold bg-white/20 backdrop-blur-md px-3 py-1 rounded-full mb-2 inline-block">זכינו
+                                        להקים בית</span>
+                                </div>
+                            </div>
+                            <h3 class="text-slate-900 dark:text-white text-lg font-bold text-center">משפחת ס.</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm text-center italic mt-2">"תהליך מכובד,
+                                יעיל ומעל הכל - אנושי. הרגשנו שיש מי שמקשיב לנו באמת."</p>
+                        </div>
+                        <div class="flex flex-col group cursor-default">
+                            <div class="overflow-hidden rounded-2xl mb-4 relative aspect-[3/4] bg-slate-100">
+                                <div class="absolute inset-0 bg-cover bg-center blurred-modesty"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCGt06CLPqlE56ZWaUDYdPJ3ADlkhuoGC7xMZWIUyyl2aGcqWz1eK4PTK_SYGplUmTQGFEJdg1tPHhS-5WMGwS7JrS3JgK3Wp1nRgQcZMfhRrRYaMsa7IJgenHrciVIwq6ZsAoOou5WNSA9-mefG3M483HSPCGMrmCrq3BoxV34BR1E8deXui4XQY_ePN0_6K6Eg5hrcpRVs84TP9hmIbcmA-kH35ua1MbLlcpUpbbtvL2EdK3Q6saC-FPDY_yhcJ0ud5QHXNqWPBqt");'>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 right-4 left-4 text-white text-center">
+                                    <span
+                                        class="text-xs font-bold bg-white/20 backdrop-blur-md px-3 py-1 rounded-full mb-2 inline-block">בית
+                                        נאמן בישראל</span>
+                                </div>
+                            </div>
+                            <h3 class="text-slate-900 dark:text-white text-lg font-bold text-center">משפחת ל.</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm text-center italic mt-2">"תודה על תשומת
+                                הלב האישית. הדיסקרטיות של המערכת נתנה לנו שקט נפשי."</p>
+                        </div>
+                        <div class="flex flex-col group cursor-default">
+                            <div class="overflow-hidden rounded-2xl mb-4 relative aspect-[3/4] bg-slate-100">
+                                <div class="absolute inset-0 bg-cover bg-center blurred-modesty"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCne2AYDm1pQiiyEFkjueqdaw4f_Yfq2j6YMhDguKwGeQ1f268elRcWbpx2Va9ARTQwR9EhEFxDS1VWKDNXBKHw_OXTB3_4tWJi1Krm8QqHmSLFHXXln3GDGLyruI11G0eYu4nO3gwvD9pkhk95suqeIuAex5EE1YQE8nTFVOZQfzCql3dPKCcUkHm6OdQaqdAsLh0VOgHBjUU7LE6Xx8RS52ZNHOuQx-sTajfTJWZAt1ytkSV6mB68pMBwI6lNdP-T5H_ou0vqnjJQ");'>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent">
+                                </div>
+                                <div class="absolute bottom-4 right-4 left-4 text-white text-center">
+                                    <span
+                                        class="text-xs font-bold bg-white/20 backdrop-blur-md px-3 py-1 rounded-full mb-2 inline-block">במזל
+                                        טוב ובסימן טוב</span>
+                                </div>
+                            </div>
+                            <h3 class="text-slate-900 dark:text-white text-lg font-bold text-center">משפחת כ.</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm text-center italic mt-2">"ההכוונה
+                                הרבנית בשלבים הקריטיים עזרה לנו להגיע להחלטה הנכונה בלב שלם."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-20 px-6 lg:px-20 max-w-[1200px] mx-auto">
+                <div class="flex flex-col gap-12">
+                    <div class="flex flex-col gap-3 text-center items-center">
+                        <h2 class="text-primary dark:text-white text-3xl font-bold leading-tight lg:text-4xl">
+                            הערכים שמובילים אותנו
+                        </h2>
+                        <p class="text-slate-600 dark:text-slate-400 text-lg max-w-[720px]">
+                            אנחנו שמים את הקהילה והאמון במרכז. השילוב בין טכנולוגיה חכמה ללב יהודי פועם.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div
+                            class="group flex flex-col gap-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm hover:shadow-xl transition-all border-t-4 border-t-primary">
+                            <div
+                                class="size-14 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-primary dark:text-blue-400 mb-2">
+                                <span class="material-symbols-outlined text-[32px]">menu_book</span>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-slate-900 dark:text-white text-xl font-bold">הכוונה וליווי רבני</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+                                    המערכת פועלת תחת פיקוח הדוק של גדולי ישראל. בכל שלב ניתן לקבל הכוונה והתייעצות עם
+                                    רבני המיזם.
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="group flex flex-col gap-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm hover:shadow-xl transition-all border-t-4 border-t-primary">
+                            <div
+                                class="size-14 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-primary dark:text-blue-400 mb-2">
+                                <span class="material-symbols-outlined text-[32px]">diversity_3</span>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-slate-900 dark:text-white text-xl font-bold">ליווי אנושי ומסור</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+                                    הטכנולוגיה היא רק כלי. שדכנים מקצועיים עוברים על כל הצעה באופן אישי ומלווים אתכם
+                                    ברגישות ובחום.
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="group flex flex-col gap-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm hover:shadow-xl transition-all border-t-4 border-t-primary">
+                            <div
+                                class="size-14 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-primary dark:text-blue-400 mb-2">
+                                <span class="material-symbols-outlined text-[32px]">lock_person</span>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-slate-900 dark:text-white text-xl font-bold">פרטיות ברמה הגבוהה ביותר
+                                </h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+                                    המידע שלכם קדוש לנו. אבטחה מחמירה והצפנה בסטנדרטים בנקאיים מבטיחים שפרטיכם יישארו
+                                    חסויים לחלוטין.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-20 px-6">
+                <div
+                    class="max-w-5xl mx-auto text-center bg-gradient-to-br from-primary to-blue-900 rounded-[2rem] p-10 lg:p-20 text-white shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none"
+                        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'0 0 2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <span class="material-symbols-outlined text-yellow-400 text-5xl mb-4">stars</span>
+                        <h2 class="text-3xl lg:text-5xl font-bold mb-6 tracking-tight italic">מוכנים למצוא את המשלים
+                            שלכם?</h2>
+                        <p class="text-blue-100 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+                            הצטרפו לאלפי בתי אב שכבר בחרו בדרך הבטוחה והמכובדת לבניית ביתם. הרישום דיסקרטי ומפוקח.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-6 justify-center w-full max-w-md mx-auto">
+                            <button
+                                class="bg-white text-primary hover:bg-slate-100 font-bold py-4 px-10 rounded-xl shadow-lg transition-all transform hover:scale-105 w-full">
+                                יצירת פרופיל חינם
+                            </button>
+                            <button
+                                class="bg-transparent border-2 border-white/40 text-white hover:bg-white/10 font-bold py-4 px-10 rounded-xl transition-all w-full">
+                                שיחה עם שדכן/ית
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+            <div class="max-w-[1200px] mx-auto px-6 lg:px-20 flex flex-col gap-10">
+                <div class="flex flex-col md:flex-row justify-between gap-12">
+                    <div class="flex flex-col gap-4 max-w-sm text-right">
+                        <div class="flex items-center gap-2 text-primary dark:text-white">
+                            <span class="material-symbols-outlined text-[28px]">synagogue</span>
+                            <span class="text-xl font-bold">מערכת השידוכים</span>
+                        </div>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                            מיזם חסד ללא כוונת רווח המוקדש לבניית בתים נאמנים בישראל, תוך שילוב טכנולוגיה מתקדמת והכוונה
+                            מסורתית.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-12 text-right">
+                        <div class="flex flex-col gap-4">
+                            <h4 class="text-slate-900 dark:text-white font-bold">הפלטפורמה</h4>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">אודותינו</a>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">איך זה עובד</a>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">אבטחה</a>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <h4 class="text-slate-900 dark:text-white font-bold">תמיכה</h4>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">מרכז עזרה</a>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">צרו קשר</a>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">דווחו על תקלה</a>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <h4 class="text-slate-900 dark:text-white font-bold">משפטי והלכתי</h4>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">מדיניות פרטיות</a>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">תקנון אתר</a>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm"
+                                href="#">קווים מנחים הלכתיים</a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row-reverse justify-between items-center gap-6">
+                    <div class="text-slate-400 text-sm">
+                        © 2024 מערכת השידוכים. כל הזכויות שמורות. לטובת הציבור.
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-400 text-xs font-medium uppercase tracking-wider">תרומות מאובטחות
+                            באמצעות</span>
+                        <div
+                            class="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700">
+                            <span class="material-symbols-outlined text-slate-500 text-sm">payments</span>
+                            <span class="text-slate-700 dark:text-slate-300 font-bold text-sm">נדרים פלוס</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>דוגמאות לאתר שידוכים</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Heebo:wght@300;400;700;900&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1a365d",
+            "secondary": "#c5a059",
+            "background-light": "#fdfbf7",
+            "deep-blue": "#0f172a",
+            "cream": "#f8f3e9",
+          },
+          fontFamily: {
+            "sans": ["Assistant", "sans-serif"],
+            "display": ["Heebo", "sans-serif"],
+          },
+        },
+      },
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+            body {
+                @apply font-sans bg-background-light text-slate-900;
+            }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center bg-cream/40 px-6">
+  <!-- Navigation to Examples -->
+  <div class="bg-white p-10 rounded-2xl shadow-xl border border-secondary/20 max-w-lg w-full text-center">
+    <div class="mb-6 flex justify-center">
+      <span class="material-symbols-outlined text-primary text-5xl">folder_managed</span>
+    </div>
+    <h1 class="text-3xl font-black text-primary mb-2 font-display">ספריית דוגמאות</h1>
+    <p class="text-slate-500 mb-8 font-medium">עיינו בדפי הדוגמאות הזמינים למטה</p>
+
+    <div class="flex flex-col gap-4">
+      <a href="/example1.html"
+        class="flex items-center justify-between p-4 bg-background-light hover:bg-slate-50 cursor-pointer rounded-xl border border-slate-100 hover:border-primary/30 transition-all group">
+        <span class="font-bold text-slate-700 group-hover:text-primary">דוגמה 1</span>
+        <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">arrow_back_ios_new</span>
+      </a>
+      <a href="/example2.html"
+        class="flex items-center justify-between p-4 bg-background-light hover:bg-slate-50 cursor-pointer rounded-xl border border-slate-100 hover:border-primary/30 transition-all group">
+        <span class="font-bold text-slate-700 group-hover:text-primary">דוגמה 2</span>
+        <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">arrow_back_ios_new</span>
+      </a>
+      <a href="/example3.html"
+        class="flex items-center justify-between p-4 bg-background-light hover:bg-slate-50 cursor-pointer rounded-xl border border-slate-100 hover:border-primary/30 transition-all group">
+        <span class="font-bold text-slate-700 group-hover:text-primary">דוגמה 3</span>
+        <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">arrow_back_ios_new</span>
+      </a>
+      <a href="/example4.html"
+        class="flex items-center justify-between p-4 bg-background-light hover:bg-slate-50 cursor-pointer rounded-xl border border-slate-100 hover:border-primary/30 transition-all group">
+        <span class="font-bold text-slate-700 group-hover:text-primary">דוגמה 4</span>
+        <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">arrow_back_ios_new</span>
+      </a>
+      <a href="/example5.html"
+        class="flex items-center justify-between p-4 bg-background-light hover:bg-slate-50 cursor-pointer rounded-xl border border-slate-100 hover:border-primary/30 transition-all group">
+        <span class="font-bold text-slate-700 group-hover:text-primary">דוגמה 5</span>
+        <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">arrow_back_ios_new</span>
+      </a>
+      <a href="/example6.html"
+        class="flex items-center justify-between p-4 bg-background-light hover:bg-slate-50 cursor-pointer rounded-xl border border-slate-100 hover:border-primary/30 transition-all group">
+        <span class="font-bold text-slate-700 group-hover:text-primary">דוגמה 6</span>
+        <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">arrow_back_ios_new</span>
+      </a>
+      <a href="/example7.html"
+        class="flex items-center justify-between p-4 bg-background-light hover:bg-slate-50 cursor-pointer rounded-xl border border-slate-100 hover:border-primary/30 transition-all group">
+        <span class="font-bold text-slate-700 group-hover:text-primary">דוגמה 7</span>
+        <span class="material-symbols-outlined text-slate-400 group-hover:text-primary">arrow_back_ios_new</span>
+      </a>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
