@@ -5,9 +5,11 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>שדכן-פרו | הדרך הבטוחה והמוכחת לזוגיות</title>
-    <meta name="description" content="אנחנו מחברים בין לבבות ביראת שמיים, בדיסקרטיות מלאה ובליווי אישי של טובי השדכנים במגזר החרדי.">
+    <meta name="description"
+        content="אנחנו מחברים בין לבבות ביראת שמיים, בדיסקרטיות מלאה ובליווי אישי של טובי השדכנים במגזר החרדי.">
     <meta property="og:title" content="שדכן-פרו | הדרך הבטוחה והמוכחת לזוגיות">
-    <meta property="og:description" content="אנחנו מחברים בין לבבות ביראת שמיים, בדיסקרטיות מלאה ובליווי אישי של טובי השדכנים במגזר החרדי.">
+    <meta property="og:description"
+        content="אנחנו מחברים בין לבבות ביראת שמיים, בדיסקרטיות מלאה ובליווי אישי של טובי השדכנים במגזר החרדי.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://shachchan-pro.co.il/">
     <meta name="twitter:card" content="summary_large_image">
@@ -96,11 +98,12 @@
         </div>
     </header>
     <main class="flex-1">
-        <section
-            class="relative pt-16 pb-20 lg:pt-28 lg:pb-32 overflow-hidden bg-primary/5">
+        <section class="relative pt-16 pb-20 lg:pt-28 lg:pb-32 overflow-hidden bg-[#f0faf8]">
+            <!-- Sacred Geometry Canvas Background -->
+            <canvas id="sacred-geometry-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                 <div
-                    class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-4 py-1.5 text-xs font-bold text-primary shadow-sm mb-8">
+                    class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/90 backdrop-blur-sm px-4 py-1.5 text-xs font-bold text-primary shadow-sm mb-8">
                     <span class="material-symbols-outlined text-[14px]" aria-hidden="true">shield</span>
                     מאובטח בסטנדרט מחמיר | מאושר ע"י רבנים
                 </div>
@@ -108,7 +111,8 @@
                     class="text-4xl font-extrabold text-slate-900 dark:text-white sm:text-6xl lg:text-7xl leading-tight mb-6 text-balance">
                     הדרך הבטוחה והמוכחת <br /> <span class="text-primary">לזוגיות של קיימא</span>
                 </h1>
-                <p class="text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10 text-pretty">
+                <p
+                    class="text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10 text-pretty">
                     אנחנו מחברים בין לבבות ביראת שמיים, בדיסקרטיות מלאה ובליווי אישי של טובי השדכנים במגזר החרדי.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -139,15 +143,223 @@
                     <p class="text-sm font-bold text-slate-500 text-pretty">מעל 15,000 נרשמים מצאו את דרכם דרכנו</p>
                 </div>
             </div>
-            <div class="absolute top-0 right-0 -mr-20 mt-20 opacity-10">
-                <span class="material-symbols-outlined text-[300px] text-primary" aria-hidden="true">family_restroom</span>
-            </div>
         </section>
+        <script>
+                (function () {
+                    const canvas = document.getElementById('sacred-geometry-canvas');
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    const PHI = (1 + Math.sqrt(5)) / 2; // Golden ratio
+
+                    let w, h, cx, cy, maxR, time = 0;
+
+                    function resize() {
+                        const section = canvas.parentElement;
+                        const dpr = window.devicePixelRatio || 1;
+                        w = section.offsetWidth;
+                        h = section.offsetHeight;
+                        canvas.width = w * dpr;
+                        canvas.height = h * dpr;
+                        canvas.style.width = w + 'px';
+                        canvas.style.height = h + 'px';
+                        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                        cx = w / 2;
+                        cy = h / 2;
+                        maxR = Math.max(w, h) * 0.6;
+                    }
+
+                    // Color palette from Sacred Geometry philosophy
+                    const TEAL = '#0f766e';
+                    const TEAL_LIGHT = '#ccfbf1';
+                    const GOLD = '#d4a853';
+                    const CREAM = '#faf7f0';
+                    const SLATE = '#94a3b8';
+
+                    function drawConcentricArcs(t) {
+                        const numRings = 12;
+                        for (let i = 1; i <= numRings; i++) {
+                            const r = (maxR / numRings) * i;
+                            const alpha = 0.04 + (i % 3 === 0 ? 0.06 : 0.02);
+                            const startAngle = t * 0.0002 * (i % 2 === 0 ? 1 : -1);
+                            const arcLength = Math.PI * (0.3 + (i / numRings) * 0.5);
+
+                            ctx.beginPath();
+                            ctx.arc(cx, cy, r, startAngle, startAngle + arcLength);
+                            ctx.strokeStyle = i % 4 === 0 ? GOLD : TEAL;
+                            ctx.globalAlpha = alpha;
+                            ctx.lineWidth = i % 3 === 0 ? 2 : 0.8;
+                            ctx.stroke();
+
+                            // Mirror arc on opposite side
+                            ctx.beginPath();
+                            ctx.arc(cx, cy, r, startAngle + Math.PI, startAngle + Math.PI + arcLength * 0.8);
+                            ctx.strokeStyle = TEAL;
+                            ctx.globalAlpha = alpha * 0.7;
+                            ctx.lineWidth = 0.6;
+                            ctx.stroke();
+                        }
+                    }
+
+                    function drawGoldenCircles(t) {
+                        const numCircles = 8;
+                        for (let i = 0; i < numCircles; i++) {
+                            const angle = (Math.PI * 2 / numCircles) * i + t * 0.00008;
+                            const dist = maxR * 0.35 * (1 + Math.sin(t * 0.0003 + i) * 0.1);
+                            const x = cx + Math.cos(angle) * dist;
+                            const y = cy + Math.sin(angle) * dist;
+                            const r = (maxR * 0.06) / (PHI * (0.5 + i * 0.15));
+
+                            // Outer glow
+                            ctx.beginPath();
+                            ctx.arc(x, y, r * 1.5, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.02;
+                            ctx.fillStyle = GOLD;
+                            ctx.fill();
+
+                            // Circle
+                            ctx.beginPath();
+                            ctx.arc(x, y, r, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.05;
+                            ctx.strokeStyle = i % 3 === 0 ? GOLD : TEAL;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+
+                            // Inner dot
+                            ctx.beginPath();
+                            ctx.arc(x, y, 2, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.12;
+                            ctx.fillStyle = i % 3 === 0 ? GOLD : TEAL;
+                            ctx.fill();
+                        }
+                    }
+
+                    function drawRadiatingLines(t) {
+                        const numLines = 24;
+                        for (let i = 0; i < numLines; i++) {
+                            const angle = (Math.PI * 2 / numLines) * i + t * 0.00005;
+                            const innerR = maxR * 0.08;
+                            const outerR = maxR * (0.25 + Math.sin(t * 0.0004 + i * 0.5) * 0.06);
+                            const x1 = cx + Math.cos(angle) * innerR;
+                            const y1 = cy + Math.sin(angle) * innerR;
+                            const x2 = cx + Math.cos(angle) * outerR;
+                            const y2 = cy + Math.sin(angle) * outerR;
+
+                            ctx.beginPath();
+                            ctx.moveTo(x1, y1);
+                            ctx.lineTo(x2, y2);
+                            ctx.globalAlpha = 0.03;
+                            ctx.strokeStyle = i % 6 === 0 ? GOLD : TEAL;
+                            ctx.lineWidth = i % 6 === 0 ? 1 : 0.4;
+                            ctx.stroke();
+                        }
+                    }
+
+                    function drawConnectionDots(t) {
+                        const numDots = 40;
+                        for (let i = 0; i < numDots; i++) {
+                            const angle = (PHI * Math.PI * 2 * i) + t * 0.00003;
+                            const dist = Math.sqrt(i / numDots) * maxR * 0.55;
+                            const x = cx + Math.cos(angle) * dist;
+                            const y = cy + Math.sin(angle) * dist;
+                            const pulse = 1 + Math.sin(t * 0.002 + i * 0.3) * 0.4;
+                            const r = 1.2 * pulse;
+
+                            ctx.beginPath();
+                            ctx.arc(x, y, r, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.07 + Math.sin(t * 0.001 + i) * 0.03;
+                            ctx.fillStyle = TEAL;
+                            ctx.fill();
+                        }
+                    }
+
+                    function drawNestedVesicaPiscis(t) {
+                        // Two overlapping circles — symbol of union
+                        const offset = maxR * 0.12;
+                        const r = maxR * 0.22;
+                        const breathe = Math.sin(t * 0.0003) * maxR * 0.015;
+
+                        for (let ring = 0; ring < 3; ring++) {
+                            const ringR = r + ring * maxR * 0.04;
+                            const ringOffset = offset + ring * 4 + breathe;
+
+                            ctx.beginPath();
+                            ctx.arc(cx - ringOffset, cy, ringR, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.025 - ring * 0.006;
+                            ctx.strokeStyle = TEAL;
+                            ctx.lineWidth = ring === 0 ? 1.5 : 0.5;
+                            ctx.stroke();
+
+                            ctx.beginPath();
+                            ctx.arc(cx + ringOffset, cy, ringR, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.025 - ring * 0.006;
+                            ctx.strokeStyle = TEAL;
+                            ctx.lineWidth = ring === 0 ? 1.5 : 0.5;
+                            ctx.stroke();
+                        }
+                    }
+
+                    function drawCornerAccents(t) {
+                        const corners = [
+                            { x: 0, y: 0 },
+                            { x: w, y: 0 },
+                            { x: 0, y: h },
+                            { x: w, y: h }
+                        ];
+                        corners.forEach((corner, idx) => {
+                            for (let i = 1; i <= 4; i++) {
+                                const r = i * maxR * 0.06;
+                                const startAngle = (idx * Math.PI / 2) + t * 0.0001;
+                                ctx.beginPath();
+                                ctx.arc(corner.x, corner.y, r, startAngle, startAngle + Math.PI * 0.4);
+                                ctx.globalAlpha = 0.03;
+                                ctx.strokeStyle = i % 2 === 0 ? GOLD : TEAL;
+                                ctx.lineWidth = 0.5;
+                                ctx.stroke();
+                            }
+                        });
+                    }
+
+                    function draw() {
+                        ctx.clearRect(0, 0, w, h);
+                        ctx.globalAlpha = 1;
+
+                        drawConcentricArcs(time);
+                        drawRadiatingLines(time);
+                        drawGoldenCircles(time);
+                        drawConnectionDots(time);
+                        drawNestedVesicaPiscis(time);
+                        drawCornerAccents(time);
+
+                        ctx.globalAlpha = 1;
+                    }
+
+                    function animate() {
+                        time += 16;
+                        draw();
+                        if (!prefersReducedMotion) {
+                            requestAnimationFrame(animate);
+                        }
+                    }
+
+                    resize();
+                    window.addEventListener('resize', () => { resize(); draw(); });
+
+                    if (prefersReducedMotion) {
+                        time = 3000;
+                        draw();
+                    } else {
+                        animate();
+                    }
+                })();
+        </script>
         <section class="py-24 bg-white relative" id="questionnaire">
             <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-4 text-balance">שאלון התאמה ראשוני</h2>
-                    <p class="text-lg text-slate-600 text-pretty">השלב הראשון למציאת הזיווג הנכון עבורך מתחיל כאן. המידע נשמר
+                    <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-4 text-balance">שאלון התאמה
+                        ראשוני</h2>
+                    <p class="text-lg text-slate-600 text-pretty">השלב הראשון למציאת הזיווג הנכון עבורך מתחיל כאן. המידע
+                        נשמר
                         בדיסקרטיות מוחלטת.</p>
                 </div>
                 <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 shadow-xl">
@@ -163,7 +375,8 @@
                     <form class="space-y-8">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="sector" class="text-sm font-bold text-slate-700">מהו המגזר אליו את/ה משתייך?</label>
+                                <label for="sector" class="text-sm font-bold text-slate-700">מהו המגזר אליו את/ה
+                                    משתייך?</label>
                                 <select id="sector" aria-label="מגזר"
                                     class="w-full rounded-lg border-slate-200 focus:border-primary focus:ring-primary text-sm p-3">
                                     <option>בחר/י מהרשימה...</option>
@@ -182,17 +395,21 @@
                             </div>
                         </div>
                         <fieldset class="space-y-4">
-                            <legend class="text-sm font-bold text-slate-700 block mb-2">מהו הכיוון ההשקפתי המבוקש?</legend>
+                            <legend class="text-sm font-bold text-slate-700 block mb-2">מהו הכיוון ההשקפתי המבוקש?
+                            </legend>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                <label class="question-option focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
+                                <label
+                                    class="question-option focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
                                     <input class="sr-only" type="checkbox" />
                                     <span class="text-sm font-semibold">תורני / ישיבתי</span>
                                 </label>
-                                <label class="question-option focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
+                                <label
+                                    class="question-option focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
                                     <input class="sr-only" type="checkbox" />
                                     <span class="text-sm font-semibold">קובע עיתים / עובד</span>
                                 </label>
-                                <label class="question-option focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
+                                <label
+                                    class="question-option focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2">
                                     <input class="sr-only" type="checkbox" />
                                     <span class="text-sm font-semibold">אקדמאי תורני</span>
                                 </label>
@@ -231,7 +448,8 @@
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="mb-16 text-center max-w-2xl mx-auto">
                     <h2 class="text-3xl font-extrabold text-slate-900 mb-4 text-balance">תהליך הליווי שלנו</h2>
-                    <p class="text-lg text-slate-600 text-pretty">אנחנו לא רק מאגר נתונים, אנחנו מלווים אותך יד ביד עד למציאת השותף
+                    <p class="text-lg text-slate-600 text-pretty">אנחנו לא רק מאגר נתונים, אנחנו מלווים אותך יד ביד עד
+                        למציאת השותף
                         לחיים.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
@@ -242,28 +460,32 @@
                             class="size-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg">
                             1</div>
                         <h3 class="text-xl font-bold mb-3 text-balance">מילוי שאלון</h3>
-                        <p class="text-sm text-slate-500 text-pretty">הגדרת השאיפות, הערכים והציפיות שלך בטופס מפורט ומובנה.</p>
+                        <p class="text-sm text-slate-500 text-pretty">הגדרת השאיפות, הערכים והציפיות שלך בטופס מפורט
+                            ומובנה.</p>
                     </div>
                     <div class="step-card relative z-10">
                         <div
                             class="size-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg">
                             2</div>
                         <h3 class="text-xl font-bold mb-3 text-balance">שיחת היכרות</h3>
-                        <p class="text-sm text-slate-500 text-pretty">שיחה אישית עם שדכן מומחה מהתחום שלך להבנת הצרכים לעומק.</p>
+                        <p class="text-sm text-slate-500 text-pretty">שיחה אישית עם שדכן מומחה מהתחום שלך להבנת הצרכים
+                            לעומק.</p>
                     </div>
                     <div class="step-card relative z-10">
                         <div
                             class="size-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg">
                             3</div>
                         <h3 class="text-xl font-bold mb-3 text-balance">הצעות ממוקדות</h3>
-                        <p class="text-sm text-slate-500 text-pretty">קבלת הצעות שעברו סינון קפדני ואימות נתונים מקדים על ידינו.</p>
+                        <p class="text-sm text-slate-500 text-pretty">קבלת הצעות שעברו סינון קפדני ואימות נתונים מקדים
+                            על ידינו.</p>
                     </div>
                     <div class="step-card relative z-10">
                         <div
                             class="size-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg">
                             4</div>
                         <h3 class="text-xl font-bold mb-3 text-balance">ליווי לפגישות</h3>
-                        <p class="text-sm text-slate-500 text-pretty">ייעוץ ותמיכה לאורך כל שלבי הפגישות עד להחלטה המשותפת.</p>
+                        <p class="text-sm text-slate-500 text-pretty">ייעוץ ותמיכה לאורך כל שלבי הפגישות עד להחלטה
+                            המשותפת.</p>
                     </div>
                 </div>
             </div>
@@ -302,14 +524,16 @@
                         </p>
                         <ul class="space-y-4">
                             <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary mt-1" aria-hidden="true">check_circle</span>
+                                <span class="material-symbols-outlined text-primary mt-1"
+                                    aria-hidden="true">check_circle</span>
                                 <div>
                                     <span class="block font-bold">ליווי אישי ורגיש</span>
                                     <span class="text-sm text-slate-500">הקשבה מלאה לצרכים הפנימיים וההשקפתיים.</span>
                                 </div>
                             </li>
                             <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary mt-1" aria-hidden="true">check_circle</span>
+                                <span class="material-symbols-outlined text-primary mt-1"
+                                    aria-hidden="true">check_circle</span>
                                 <div>
                                     <span class="block font-bold">בירור נתונים יסודי</span>
                                     <span class="text-sm text-slate-500">חיסכון בזמן ובאנרגיה על ידי בירורים מוקדמים
@@ -317,7 +541,8 @@
                                 </div>
                             </li>
                             <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary mt-1" aria-hidden="true">check_circle</span>
+                                <span class="material-symbols-outlined text-primary mt-1"
+                                    aria-hidden="true">check_circle</span>
                                 <div>
                                     <span class="block font-bold">רשת שיתופית מאובטחת</span>
                                     <span class="text-sm text-slate-500">גישה למאגרים רחבים בפיקוח הדוק.</span>
@@ -341,7 +566,8 @@
                     <div class="p-8 bg-slate-800 rounded-2xl border border-slate-700 relative">
                         <span
                             class="material-symbols-outlined text-primary/30 text-5xl absolute top-6 left-6">format_quote</span>
-                        <p class="text-slate-300 italic mb-8 relative z-10 text-pretty">"התהליך היה כל כך מכבד ונעים. הרגשתי
+                        <p class="text-slate-300 italic mb-8 relative z-10 text-pretty">"התהליך היה כל כך מכבד ונעים.
+                            הרגשתי
                             שהשדכנית באמת מבינה מה אני מחפשת, ולא סתם מציעה שמות. היום אנחנו נשואים באושר."</p>
                         <div class="flex items-center gap-4 border-t border-slate-700 pt-6">
                             <div class="size-12 rounded-full bg-cover bg-center border-2 border-primary/50"
@@ -356,7 +582,8 @@
                     <div class="p-8 bg-slate-800 rounded-2xl border border-slate-700 relative">
                         <span
                             class="material-symbols-outlined text-primary/30 text-5xl absolute top-6 left-6">format_quote</span>
-                        <p class="text-slate-300 italic mb-8 relative z-10 text-pretty">"אחרי תקופה ארוכה של חיפושים, השאלון והשיחה
+                        <p class="text-slate-300 italic mb-8 relative z-10 text-pretty">"אחרי תקופה ארוכה של חיפושים,
+                            השאלון והשיחה
                             עם השדכן פתחו לי כיוונים חדשים שבאמת התאימו לי. תודה על הליווי המקצועי!"</p>
                         <div class="flex items-center gap-4 border-t border-slate-700 pt-6">
                             <div class="size-12 rounded-full bg-cover bg-center border-2 border-primary/50"
@@ -371,7 +598,8 @@
                     <div class="p-8 bg-slate-800 rounded-2xl border border-slate-700 relative">
                         <span
                             class="material-symbols-outlined text-primary/30 text-5xl absolute top-6 left-6">format_quote</span>
-                        <p class="text-slate-300 italic mb-8 relative z-10 text-pretty">"הדיסקרטיות והביטחון בנתונים נתנו לי שקט
+                        <p class="text-slate-300 italic mb-8 relative z-10 text-pretty">"הדיסקרטיות והביטחון בנתונים
+                            נתנו לי שקט
                             נפשי. ידעתי שהמידע שלי בידיים טובות ומפוקחות על ידי רבנים."</p>
                         <div class="flex items-center gap-4 border-t border-slate-700 pt-6">
                             <div class="size-12 rounded-full bg-cover bg-center border-2 border-primary/50"
@@ -476,7 +704,8 @@
                 </div>
             </div>
             <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-sm text-slate-400 font-bold text-center text-pretty">© 2024 שדכן-פרו. כל הזכויות שמורות למען בניין
+                <p class="text-sm text-slate-400 font-bold text-center text-pretty">© 2024 שדכן-פרו. כל הזכויות שמורות
+                    למען בניין
                     עדי עד.</p>
                 <div class="flex gap-6 items-center opacity-60">
                     <span class="text-xs font-bold text-slate-400">מאובטח בתקן SSL מחמיר</span>
