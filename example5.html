@@ -47,6 +47,84 @@
         h1, h2, h3 {
             font-family: 'Heebo', sans-serif;
         }
+        html { scroll-behavior: smooth; }
+
+        /* Scroll-reveal: elements start hidden, animate in */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .reveal-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Timeline icon pulse on reveal */
+        .timeline-icon {
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        .timeline-icon.pop {
+            transform: translateX(50%) scale(1.18);
+            box-shadow: 0 0 0 8px rgba(30,64,175,0.12);
+        }
+        .timeline-icon.pop-done {
+            transform: translateX(50%) scale(1);
+            box-shadow: 0 0 0 0px rgba(30,64,175,0);
+        }
+
+        /* Stat counter shimmer */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .stat-number.counting {
+            background: linear-gradient(90deg, currentColor 40%, rgba(30,64,175,0.5) 50%, currentColor 60%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 1.2s ease-out forwards;
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal-left, .reveal-right, .reveal-scale {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            .timeline-icon { transition: none !important; }
+            .stat-number.counting { animation: none !important; }
+            html { scroll-behavior: auto; }
+        }
     </style>
 </head>
 
@@ -93,16 +171,16 @@
             <canvas id="hero-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
             <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
                 <div
-                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary text-xs font-bold uppercase tracking-widest mb-6">
+                    class="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary text-xs font-bold uppercase tracking-widest mb-6">
                     <span class="material-symbols-outlined text-sm">verified</span>
                     בפיקוח ובליווי גדולי ישראל
                 </div>
-                <h1
-                    class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-tight mb-6 tracking-tight">
+                <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-tight mb-6 tracking-tight"
+                    data-delay="100">
                     הדרך הייחודית שלכם <span class="text-primary">לבניין עדי עד</span>
                 </h1>
-                <p
-                    class="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
+                <p class="reveal text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium"
+                    data-delay="200">
                     אנו משלבים טכנולוגיה מתקדמת עם הניסיון והרגישות של שדכנים מומחים, כדי לסייע לכם למצוא את הזיווג
                     המשלים מתוך כבוד, צניעות ודיסקרטיות מלאה.
                 </p>
@@ -115,7 +193,7 @@
                         class="absolute right-[28px] md:right-1/2 top-4 bottom-4 w-0.5 bg-gradient-to-b from-blue-200 via-blue-200 to-transparent dark:from-slate-700 dark:via-slate-700 translate-x-1/2 md:translate-x-0">
                     </div>
                     <div
-                        class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
+                        class="reveal relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
                         <div class="md:w-1/2 md:pl-16 md:text-right order-2 md:order-1 pr-16 md:pr-0">
                             <h3
                                 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
@@ -124,7 +202,7 @@
                                 על האופי, השאיפות הרוחניות וההשקפה שלכם.</p>
                         </div>
                         <div
-                            class="absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
+                            class="timeline-icon absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
                             <span class="material-symbols-outlined text-primary text-2xl">person_add</span>
                         </div>
                         <div class="md:w-1/2 md:pr-16 order-3 md:order-3 hidden md:block">
@@ -133,15 +211,15 @@
                                 01</span>
                         </div>
                     </div>
-                    <div
-                        class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
+                    <div class="reveal relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group"
+                        data-delay="100">
                         <div class="md:w-1/2 md:pl-16 md:text-right order-2 md:order-1 pr-16 md:pr-0 hidden md:block">
                             <span
                                 class="text-xs font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">שלב
                                 02</span>
                         </div>
                         <div
-                            class="absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
+                            class="timeline-icon absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
                             <span class="material-symbols-outlined text-primary text-2xl">verified_user</span>
                         </div>
                         <div class="md:w-1/2 md:pr-16 order-3 md:order-3 pr-16 md:pr-0">
@@ -152,8 +230,8 @@
                                 המערכת כדי להבטיח אמינות, רצינות ועמידה בסטנדרטים הקהילתיים.</p>
                         </div>
                     </div>
-                    <div
-                        class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
+                    <div class="reveal relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group"
+                        data-delay="200">
                         <div class="md:w-1/2 md:pl-16 md:text-right order-2 md:order-1 pr-16 md:pr-0">
                             <h3
                                 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
@@ -162,7 +240,7 @@
                                 מהותיות כדי להציע הצעות רלוונטיות ומדויקות ביותר.</p>
                         </div>
                         <div
-                            class="absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
+                            class="timeline-icon absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
                             <span class="material-symbols-outlined text-primary text-2xl">account_tree</span>
                         </div>
                         <div class="md:w-1/2 md:pr-16 order-3 md:order-3 hidden md:block">
@@ -171,15 +249,15 @@
                                 03</span>
                         </div>
                     </div>
-                    <div
-                        class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
+                    <div class="reveal relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group"
+                        data-delay="300">
                         <div class="md:w-1/2 md:pl-16 md:text-right order-2 md:order-1 pr-16 md:pr-0 hidden md:block">
                             <span
                                 class="text-xs font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">שלב
                                 04</span>
                         </div>
                         <div
-                            class="absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
+                            class="timeline-icon absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
                             <span class="material-symbols-outlined text-primary text-2xl">groups</span>
                         </div>
                         <div class="md:w-1/2 md:pr-16 order-3 md:order-3 pr-16 md:pr-0">
@@ -190,8 +268,8 @@
                                 שדכנים מנוסים בוחנים כל הצעה לפני שהיא מועברת אליכם.</p>
                         </div>
                     </div>
-                    <div
-                        class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
+                    <div class="reveal relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group"
+                        data-delay="400">
                         <div class="md:w-1/2 md:pl-16 md:text-right order-2 md:order-1 pr-16 md:pr-0">
                             <h3
                                 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
@@ -200,7 +278,7 @@
                                 בשלב זה לא נחשפות תמונות כדי להתמקד במהות ובאישיות.</p>
                         </div>
                         <div
-                            class="absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
+                            class="timeline-icon absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
                             <span class="material-symbols-outlined text-primary text-2xl">forward_to_inbox</span>
                         </div>
                         <div class="md:w-1/2 md:pr-16 order-3 md:order-3 hidden md:block">
@@ -209,15 +287,15 @@
                                 05</span>
                         </div>
                     </div>
-                    <div
-                        class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group">
+                    <div class="reveal relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-16 group"
+                        data-delay="500">
                         <div class="md:w-1/2 md:pl-16 md:text-right order-2 md:order-1 pr-16 md:pr-0 hidden md:block">
                             <span
                                 class="text-xs font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">שלב
                                 06</span>
                         </div>
                         <div
-                            class="absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
+                            class="timeline-icon absolute right-[28px] md:right-1/2 translate-x-1/2 flex items-center justify-center w-14 h-14 rounded-full bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-700 shadow-md z-20 order-1 md:order-2">
                             <span class="material-symbols-outlined text-primary text-2xl">temple_hindu</span>
                         </div>
                         <div class="md:w-1/2 md:pr-16 order-3 md:order-3 pr-16 md:pr-0">
@@ -230,7 +308,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-8 text-center">
+            <div class="reveal mt-8 text-center" data-delay="200">
                 <button
                     class="inline-flex items-center justify-center h-14 px-10 bg-primary hover:bg-secondary text-white text-lg font-bold rounded-lg shadow-xl transition-all transform hover:scale-105">
                     התחילו את המסע שלכם
@@ -240,7 +318,7 @@
         </section>
         <section class="py-20 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
+                <div class="reveal flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
                     <div class="text-right">
                         <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-3">מזל טוב!</h2>
                         <p class="text-slate-600 dark:text-slate-400 text-lg font-medium">שמחים בשמחת המשפחות שזכו להקים
@@ -258,43 +336,46 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div
-                        class="bg-background-light dark:bg-slate-800 p-8 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow border border-slate-100 dark:border-slate-700">
+                        class="reveal-scale bg-background-light dark:bg-slate-800 p-8 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow border border-slate-100 dark:border-slate-700">
                         <div
                             class="w-14 h-14 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-pink-600">
                             <span class="material-symbols-outlined text-3xl">favorite</span>
                         </div>
                         <div>
-                            <p class="text-4xl font-black text-slate-900 dark:text-white">1,248</p>
+                            <p class="stat-number text-4xl font-black text-slate-900 dark:text-white" data-target="1248"
+                                data-suffix="">1,248</p>
                             <p class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
                                 אירוסין</p>
                         </div>
                     </div>
-                    <div
-                        class="bg-background-light dark:bg-slate-800 p-8 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow border border-slate-100 dark:border-slate-700">
+                    <div class="reveal-scale bg-background-light dark:bg-slate-800 p-8 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow border border-slate-100 dark:border-slate-700"
+                        data-delay="100">
                         <div
                             class="w-14 h-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600">
                             <span class="material-symbols-outlined text-3xl">celebration</span>
                         </div>
                         <div>
-                            <p class="text-4xl font-black text-slate-900 dark:text-white">850</p>
+                            <p class="stat-number text-4xl font-black text-slate-900 dark:text-white" data-target="850"
+                                data-suffix="">850</p>
                             <p class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
                                 חתונות</p>
                         </div>
                     </div>
-                    <div
-                        class="bg-background-light dark:bg-slate-800 p-8 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow border border-slate-100 dark:border-slate-700">
+                    <div class="reveal-scale bg-background-light dark:bg-slate-800 p-8 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow border border-slate-100 dark:border-slate-700"
+                        data-delay="200">
                         <div
                             class="w-14 h-14 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600">
                             <span class="material-symbols-outlined text-3xl">psychology_alt</span>
                         </div>
                         <div>
-                            <p class="text-4xl font-black text-slate-900 dark:text-white">50+</p>
+                            <p class="stat-number text-4xl font-black text-slate-900 dark:text-white" data-target="50"
+                                data-suffix="+">50+</p>
                             <p class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
                                 שדכנים מומחים</p>
                         </div>
                     </div>
-                    <div
-                        class="bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white col-span-1 lg:col-span-1 relative overflow-hidden group cursor-pointer shadow-xl">
+                    <div class="reveal-scale bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white col-span-1 lg:col-span-1 relative overflow-hidden group cursor-pointer shadow-xl"
+                        data-delay="300">
                         <div
                             class="absolute left-0 top-0 opacity-10 transform -translate-x-1/3 -translate-y-1/3 group-hover:scale-110 transition-transform duration-500">
                             <span class="material-symbols-outlined text-[140px]">auto_awesome</span>
@@ -309,7 +390,7 @@
         <section class="py-24 px-4 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
             <canvas id="cta-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
             <div
-                class="max-w-4xl mx-auto text-center bg-white dark:bg-slate-800 rounded-3xl shadow-2xl dark:shadow-none p-12 md:p-20 border border-slate-100 dark:border-slate-700 relative z-10">
+                class="reveal-scale max-w-4xl mx-auto text-center bg-white dark:bg-slate-800 rounded-3xl shadow-2xl dark:shadow-none p-12 md:p-20 border border-slate-100 dark:border-slate-700 relative z-10">
                 <div
                     class="w-20 h-20 bg-blue-50 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-8 text-primary">
                     <span class="material-symbols-outlined text-4xl">handshake</span>
@@ -352,124 +433,145 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // ── Scroll-Reveal Observer ──
+            const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            if (!prefersReducedMotion) {
+                const revealObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const delay = parseInt(entry.target.dataset.delay || '0', 10);
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                                // Pop timeline icons inside this step
+                                const icon = entry.target.querySelector('.timeline-icon');
+                                if (icon) {
+                                    icon.classList.add('pop');
+                                    setTimeout(() => { icon.classList.remove('pop'); icon.classList.add('pop-done'); }, 300);
+                                }
+                            }, delay);
+                            revealObs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+                revealEls.forEach(el => revealObs.observe(el));
+            } else {
+                revealEls.forEach(el => el.classList.add('visible'));
+            }
+
+            // ── Animated Stat Counters ──
+            const statEls = document.querySelectorAll('.stat-number[data-target]');
+            function animateCounter(el) {
+                const target = parseInt(el.dataset.target, 10);
+                const suffix = el.dataset.suffix || '';
+                const duration = 1200;
+                const start = performance.now();
+                el.classList.add('counting');
+                function tick(now) {
+                    const p = Math.min((now - start) / duration, 1);
+                    const ease = 1 - Math.pow(1 - p, 3); // ease-out cubic
+                    const val = Math.round(ease * target);
+                    el.textContent = val.toLocaleString() + suffix;
+                    if (p < 1) requestAnimationFrame(tick);
+                    else setTimeout(() => el.classList.remove('counting'), 200);
+                }
+                if (!prefersReducedMotion) requestAnimationFrame(tick);
+            }
+            if (statEls.length) {
+                const statObs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            const delay = parseInt(e.target.closest('[data-delay]')?.dataset.delay || '0', 10);
+                            setTimeout(() => animateCounter(e.target), delay);
+                            statObs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                statEls.forEach(el => statObs.observe(el));
+            }
+
+            // ── Sacred Geometry Canvases (with breathing animation) ──
             function setupSacredGeometry(canvasId, variant) {
                 const canvas = document.getElementById(canvasId);
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
-
-                let width, height;
+                let width, height, animId;
+                let phase = 0;
 
                 function resize() {
                     const rect = canvas.parentElement.getBoundingClientRect();
-                    width = rect.width;
-                    height = rect.height;
+                    width = rect.width; height = rect.height;
                     const dpr = window.devicePixelRatio || 1;
-                    canvas.width = width * dpr;
-                    canvas.height = height * dpr;
-                    ctx.scale(dpr, dpr);
-                    draw();
+                    canvas.width = width * dpr; canvas.height = height * dpr;
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
                 }
 
-                function draw() {
+                function draw(t) {
                     ctx.clearRect(0, 0, width, height);
-
                     const isDark = document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
-                    // Colors aligned with "Sacred Geometry" philosophy
-                    // Primary Teal: #0f766e
-                    // Secondary Gold: #d4a853
-                    const tealColor = isDark ? 'rgba(15, 118, 110, 0.25)' : 'rgba(15, 118, 110, 0.15)';
-                    const goldColor = isDark ? 'rgba(212, 168, 83, 0.35)' : 'rgba(212, 168, 83, 0.25)';
-                    const solidGold = isDark ? 'rgba(212, 168, 83, 0.6)' : 'rgba(212, 168, 83, 0.4)';
-
+                    const breath = prefersReducedMotion ? 0 : Math.sin(phase) * 0.06;
+                    const baseAlphaT = isDark ? 0.25 : 0.15;
+                    const baseAlphaG = isDark ? 0.35 : 0.25;
+                    const tealA = baseAlphaT + breath * 0.5;
+                    const goldA = baseAlphaG + breath * 0.5;
+                    const teal = `rgba(15,118,110,${tealA.toFixed(3)})`;
+                    const gold = `rgba(212,168,83,${goldA.toFixed(3)})`;
+                    const solidGold = `rgba(212,168,83,${(goldA + 0.2).toFixed(3)})`;
                     ctx.lineCap = 'round';
 
                     if (variant === 'hero') {
-                        const cx = width / 2;
-                        const cy = height * 0.7;
-
-                        // Sunburst lines radiating outward
+                        const cx = width / 2, cy = height * 0.7;
                         for (let i = 0; i < 36; i++) {
-                            const angle = (i * 10) * Math.PI / 180;
-                            if (angle > Math.PI * 1.05 && angle < Math.PI * 1.95) {
+                            const a = (i * 10) * Math.PI / 180;
+                            if (a > Math.PI * 1.05 && a < Math.PI * 1.95) {
                                 ctx.beginPath();
-                                ctx.moveTo(cx + Math.cos(angle) * 180, cy + Math.sin(angle) * 180);
-                                ctx.lineTo(cx + Math.cos(angle) * Math.max(width, height), cy + Math.sin(angle) * Math.max(width, height));
-                                ctx.strokeStyle = tealColor;
-                                ctx.lineWidth = 0.5;
-                                ctx.stroke();
+                                ctx.moveTo(cx + Math.cos(a) * 180, cy + Math.sin(a) * 180);
+                                ctx.lineTo(cx + Math.cos(a) * Math.max(width, height), cy + Math.sin(a) * Math.max(width, height));
+                                ctx.strokeStyle = teal; ctx.lineWidth = 0.5; ctx.stroke();
                             }
                         }
-
-                        // Concentric arches ascending like an envelope
                         for (let i = 1; i <= 10; i++) {
-                            ctx.beginPath();
-                            ctx.arc(cx, cy, 150 + i * 50, Math.PI * 1.05, Math.PI * 1.95);
-                            ctx.strokeStyle = i % 3 === 0 ? goldColor : tealColor;
-                            ctx.lineWidth = i % 3 === 0 ? 1.5 : 0.5;
-                            ctx.stroke();
+                            const r = 150 + i * 50 + (prefersReducedMotion ? 0 : Math.sin(phase + i * 0.3) * 4);
+                            ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI * 1.05, Math.PI * 1.95);
+                            ctx.strokeStyle = i % 3 === 0 ? gold : teal;
+                            ctx.lineWidth = i % 3 === 0 ? 1.5 : 0.5; ctx.stroke();
                         }
-
-                        // Central subtle focal point
                         for (let i = 1; i <= 3; i++) {
-                            ctx.beginPath();
-                            ctx.arc(cx, cy, 100 + i * 15, Math.PI * 1.1, Math.PI * 1.9);
-                            ctx.strokeStyle = goldColor;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
+                            ctx.beginPath(); ctx.arc(cx, cy, 100 + i * 15, Math.PI * 1.1, Math.PI * 1.9);
+                            ctx.strokeStyle = gold; ctx.lineWidth = 0.5; ctx.stroke();
                         }
                     } else if (variant === 'cta') {
-                        const cx = width / 2;
-                        const cy = height / 2;
-                        const radius = Math.min(width, height) * 0.8;
-
-                        // Interlocking circles reflecting "two halves becoming whole"
+                        const cx = width / 2, cy = height / 2;
                         const offset = width < 768 ? 60 : 120;
-
-                        // Left circle (Teal)
+                        const breathOff = prefersReducedMotion ? 0 : Math.sin(phase) * 6;
                         for (let i = 0; i < 6; i++) {
-                            ctx.beginPath();
-                            ctx.arc(cx - offset, cy, 100 + i * 25, 0, Math.PI * 2);
-                            ctx.strokeStyle = tealColor;
-                            ctx.lineWidth = 1 - (i * 0.1);
-                            ctx.stroke();
+                            ctx.beginPath(); ctx.arc(cx - offset - breathOff, cy, 100 + i * 25, 0, Math.PI * 2);
+                            ctx.strokeStyle = teal; ctx.lineWidth = 1 - i * 0.1; ctx.stroke();
                         }
-
-                        // Right circle (Gold)
                         for (let i = 0; i < 6; i++) {
-                            ctx.beginPath();
-                            ctx.arc(cx + offset, cy, 100 + i * 25, 0, Math.PI * 2);
-                            ctx.strokeStyle = goldColor;
-                            ctx.lineWidth = 1 - (i * 0.1);
-                            ctx.stroke();
+                            ctx.beginPath(); ctx.arc(cx + offset + breathOff, cy, 100 + i * 25, 0, Math.PI * 2);
+                            ctx.strokeStyle = gold; ctx.lineWidth = 1 - i * 0.1; ctx.stroke();
                         }
-
-                        // Intersection/vesica piscis highlights
-                        ctx.beginPath();
-                        ctx.arc(cx, cy, 40, 0, Math.PI * 2);
-                        ctx.strokeStyle = solidGold;
-                        ctx.lineWidth = 0.5;
-                        ctx.setLineDash([4, 4]);
-                        ctx.stroke();
-                        ctx.setLineDash([]);
-
-                        // Connecting line - golden thread
-                        ctx.beginPath();
-                        ctx.moveTo(cx - offset, cy);
-                        ctx.lineTo(cx + offset, cy);
-                        ctx.strokeStyle = solidGold;
-                        ctx.lineWidth = 1;
-                        ctx.stroke();
+                        ctx.beginPath(); ctx.arc(cx, cy, 40, 0, Math.PI * 2);
+                        ctx.strokeStyle = solidGold; ctx.lineWidth = 0.5;
+                        ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]);
+                        ctx.beginPath(); ctx.moveTo(cx - offset - breathOff, cy);
+                        ctx.lineTo(cx + offset + breathOff, cy);
+                        ctx.strokeStyle = solidGold; ctx.lineWidth = 1; ctx.stroke();
                     }
                 }
 
-                window.addEventListener('resize', resize);
-                // initial small delay to ensure layout is complete
-                setTimeout(resize, 50);
+                function loop() {
+                    phase += 0.008;
+                    draw(); animId = requestAnimationFrame(loop);
+                }
 
-                // Observe dark mode changes on html or body
-                const observer = new MutationObserver(draw);
-                observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-                observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+                window.addEventListener('resize', () => { resize(); draw(); });
+                const obs = new MutationObserver(() => draw());
+                obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+                obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+                setTimeout(() => { resize(); prefersReducedMotion ? draw() : loop(); }, 60);
             }
 
             setupSacredGeometry('hero-canvas', 'hero');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="he">
+<html dir="rtl" lang="he" style="scroll-behavior: smooth;">
 
 <head>
     <meta charset="utf-8" />
@@ -46,10 +46,231 @@
             border-image: linear-gradient(to bottom, #c5a059, #e2d1a4) 1;
         }
     </style>
+    <style>
+        /* ===== ANIMATION SYSTEM ===== */
+
+        /* Scroll-reveal: elements start hidden, animate in */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Reveal from left (for RTL context) */
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal-right.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Scale-in reveal */
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal-scale.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hero entrance keyframes */
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-animate {
+            animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .hero-delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .hero-delay-2 {
+            animation-delay: 0.3s;
+        }
+
+        .hero-delay-3 {
+            animation-delay: 0.5s;
+        }
+
+        /* Floating icon pulse */
+        @keyframes floatPulse {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-6px) scale(1.05);
+            }
+        }
+
+        .float-pulse {
+            animation: floatPulse 3s ease-in-out infinite;
+        }
+
+        /* Golden shimmer for celebration cards */
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .shimmer-border {
+            position: relative;
+        }
+
+        .shimmer-border::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(197, 160, 89, 0.4) 25%,
+                    rgba(197, 160, 89, 0.7) 50%,
+                    rgba(197, 160, 89, 0.4) 75%,
+                    transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 4s linear infinite;
+            z-index: -1;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        /* Counter number animation */
+        @keyframes countPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        .count-animate {
+            animation: countPulse 2.5s ease-in-out infinite;
+        }
+
+        /* Header transition on scroll */
+        header {
+            transition: box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 4px 20px rgba(26, 54, 93, 0.12);
+        }
+
+        /* Card icon spin on hover */
+        .group:hover .icon-spin {
+            transform: rotate(8deg) scale(1.1);
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .icon-spin {
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Button shine effect */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.15),
+                    transparent);
+            transform: skewX(-25deg);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+
+        .btn-shine:hover::after {
+            left: 120%;
+        }
+
+        /* Number step badges floating */
+        .group:hover .step-badge {
+            transform: translate(-4px, -4px) scale(1.08);
+        }
+
+        .step-badge {
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* CTA section icon */
+        .cta-icon {
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .cta-icon:hover {
+            transform: translateX(-50%) translateY(-50%) rotate(10deg) scale(1.12);
+        }
+
+        /* ===== ACCESSIBILITY: prefers-reduced-motion ===== */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .reveal,
+            .reveal-right,
+            .reveal-scale {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="min-h-screen flex flex-col">
-    <header class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-secondary/20 shadow-sm">
+    <header id="main-header"
+        class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-secondary/20 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -75,11 +296,11 @@
                 </nav>
                 <div class="flex items-center gap-4">
                     <button
-                        class="hidden sm:block text-primary font-bold text-base hover:text-secondary transition-colors">
+                        class="hidden sm:block text-primary font-bold text-base hover:text-secondary transition-colors cursor-pointer">
                         התחברות
                     </button>
                     <button
-                        class="px-6 py-2.5 text-base font-bold text-white bg-primary hover:bg-slate-800 rounded-md shadow-md transition-all">
+                        class="px-6 py-2.5 text-base font-bold text-white bg-primary hover:bg-slate-800 rounded-md shadow-md transition-all cursor-pointer btn-shine">
                         הרשמה למערכת
                     </button>
                 </div>
@@ -91,14 +312,16 @@
             <canvas id="canvas-hero" class="absolute inset-0 w-full h-full z-0 opacity-80 pointer-events-none"></canvas>
             <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
                 <div
-                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-sm font-bold mb-8 border border-primary/10">
+                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-sm font-bold mb-8 border border-primary/10 hero-animate hero-delay-1">
                     <span class="material-symbols-outlined text-base">verified_user</span>
                     מעל 10,000 משפחות חרדיות כבר איתנו
                 </div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-primary leading-tight mb-6 font-display">
+                <h1
+                    class="text-4xl md:text-5xl lg:text-6xl font-black text-primary leading-tight mb-6 font-display hero-animate hero-delay-2">
                     תהליך אישי, <span class="text-secondary">דיסקרטי</span> ומקצועי
                 </h1>
-                <p class="text-lg md:text-xl text-slate-700 max-w-2xl mx-auto leading-relaxed font-medium">
+                <p
+                    class="text-lg md:text-xl text-slate-700 max-w-2xl mx-auto leading-relaxed font-medium hero-animate hero-delay-3">
                     אנחנו משלבים טכנולוגיה מתקדמת עם ליווי אישי של שדכנים מנוסים, במטרה לסייע לכם למצוא את הזיווג הנכון
                     בדרך התורה ובצניעות המרבית.
                 </p>
@@ -106,14 +329,14 @@
         </section>
         <section class="py-20 px-4 bg-white">
             <div class="max-w-6xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="steps-grid">
                     <div
-                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all shadow-sm hover:shadow-xl relative overflow-hidden">
+                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all duration-200 shadow-sm hover:shadow-xl relative overflow-hidden cursor-pointer reveal">
                         <div
-                            class="absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors">
+                            class="step-badge absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors duration-200">
                             01</div>
                         <div
-                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200 icon-spin">
                             <span class="material-symbols-outlined text-3xl">assignment_ind</span>
                         </div>
                         <h3 class="text-xl font-bold text-primary mb-4">רישום מפורט ומעמיק</h3>
@@ -121,12 +344,12 @@
                             השקפת העולם, הרקע התורני והשאיפות שלכם.</p>
                     </div>
                     <div
-                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all shadow-sm hover:shadow-xl relative overflow-hidden">
+                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all duration-200 shadow-sm hover:shadow-xl relative overflow-hidden cursor-pointer reveal">
                         <div
-                            class="absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors">
+                            class="step-badge absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors duration-200">
                             02</div>
                         <div
-                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200 icon-spin">
                             <span class="material-symbols-outlined text-3xl">admin_panel_settings</span>
                         </div>
                         <h3 class="text-xl font-bold text-primary mb-4">אימות ואישור מנהל</h3>
@@ -134,12 +357,12 @@
                             שלנו, כדי להבטיח את רצינות המועמדים ועמידה בסטנדרטים של הקהילה.</p>
                     </div>
                     <div
-                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all shadow-sm hover:shadow-xl relative overflow-hidden">
+                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all duration-200 shadow-sm hover:shadow-xl relative overflow-hidden cursor-pointer reveal">
                         <div
-                            class="absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors">
+                            class="step-badge absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors duration-200">
                             03</div>
                         <div
-                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200 icon-spin">
                             <span class="material-symbols-outlined text-3xl">auto_awesome</span>
                         </div>
                         <h3 class="text-xl font-bold text-primary mb-4">אלגוריתם התאמה חכם</h3>
@@ -147,12 +370,12 @@
                             השקפתית כדי להציע הצעות רלוונטיות ומדויקות ביותר.</p>
                     </div>
                     <div
-                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all shadow-sm hover:shadow-xl relative overflow-hidden">
+                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all duration-200 shadow-sm hover:shadow-xl relative overflow-hidden cursor-pointer reveal">
                         <div
-                            class="absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors">
+                            class="step-badge absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors duration-200">
                             04</div>
                         <div
-                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200 icon-spin">
                             <span class="material-symbols-outlined text-3xl">groups_3</span>
                         </div>
                         <h3 class="text-xl font-bold text-primary mb-4">סקירת שדכנים אנושית</h3>
@@ -160,12 +383,12 @@
                             כל הצעה לפני שהיא נשלחת אליכם, עם עין מקצועית ורגישות.</p>
                     </div>
                     <div
-                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all shadow-sm hover:shadow-xl relative overflow-hidden">
+                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all duration-200 shadow-sm hover:shadow-xl relative overflow-hidden cursor-pointer reveal">
                         <div
-                            class="absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors">
+                            class="step-badge absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors duration-200">
                             05</div>
                         <div
-                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200 icon-spin">
                             <span class="material-symbols-outlined text-3xl">mail_lock</span>
                         </div>
                         <h3 class="text-xl font-bold text-primary mb-4">שליחת הצעה דיסקרטית</h3>
@@ -173,12 +396,12 @@
                             כדי לאפשר התמקדות במידות, באישיות ובמהות של המועמד.</p>
                     </div>
                     <div
-                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all shadow-sm hover:shadow-xl relative overflow-hidden">
+                        class="group bg-white p-8 rounded-xl border-2 border-slate-100 hover:border-secondary transition-all duration-200 shadow-sm hover:shadow-xl relative overflow-hidden cursor-pointer reveal">
                         <div
-                            class="absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors">
+                            class="step-badge absolute -top-4 -right-4 w-16 h-16 bg-cream rounded-full flex items-center justify-center text-secondary font-black text-2xl group-hover:bg-secondary group-hover:text-white transition-colors duration-200">
                             06</div>
                         <div
-                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200 icon-spin">
                             <span class="material-symbols-outlined text-3xl">temple_hindu</span>
                         </div>
                         <h3 class="text-xl font-bold text-primary mb-4">ליווי עד לחופה</h3>
@@ -188,9 +411,9 @@
                 </div>
             </div>
         </section>
-        <section class="py-20 bg-primary">
+        <section class="py-20 bg-primary overflow-hidden">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
+                <div class="text-center mb-12 reveal">
                     <div
                         class="inline-block px-4 py-1 bg-secondary text-primary font-bold text-xs uppercase tracking-widest mb-4">
                         בשעה טובה ומוצלחת</div>
@@ -198,7 +421,8 @@
                     <div class="w-32 h-1 bg-secondary mx-auto"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-cream p-8 text-center border-double border-4 border-secondary shadow-2xl relative">
+                    <div
+                        class="bg-cream p-8 text-center border-double border-4 border-secondary shadow-2xl relative shimmer-border reveal-scale">
                         <div class="text-primary font-traditional text-2xl font-bold mb-2">מזל טוב!</div>
                         <p class="text-slate-800 font-medium mb-4">אנו שמחים לבשר על אירוסי</p>
                         <div class="text-3xl font-traditional font-black text-primary mb-4">שלמה וחני</div>
@@ -206,7 +430,8 @@
                         <div class="mt-4 pt-4 border-t border-secondary/20 text-slate-500 text-xs italic">"עוד ישמע בערי
                             יהודה ובחוצות ירושלים"</div>
                     </div>
-                    <div class="bg-cream p-8 text-center border-double border-4 border-secondary shadow-2xl relative">
+                    <div
+                        class="bg-cream p-8 text-center border-double border-4 border-secondary shadow-2xl relative shimmer-border reveal-scale">
                         <div class="text-primary font-traditional text-2xl font-bold mb-2">קול ששון וקול שמחה</div>
                         <p class="text-slate-800 font-medium mb-4">שמחים לבשר על אירוסי</p>
                         <div class="text-3xl font-traditional font-black text-primary mb-4">משה ורבקה</div>
@@ -215,14 +440,14 @@
                             בישראל"</div>
                     </div>
                     <div
-                        class="bg-primary border-2 border-secondary p-8 flex flex-col justify-center items-center text-cream">
-                        <div class="mb-4">
+                        class="bg-primary border-2 border-secondary p-8 flex flex-col justify-center items-center text-cream reveal-scale">
+                        <div class="mb-4 float-pulse">
                             <span class="material-symbols-outlined text-5xl text-secondary">diamond</span>
                         </div>
-                        <div class="text-4xl font-bold mb-2">1,248</div>
+                        <div class="text-4xl font-bold mb-2 count-animate" id="counter" data-target="1248">0</div>
                         <div class="text-lg font-medium text-secondary mb-6">זוגות שזכו להקים בית</div>
                         <button
-                            class="px-6 py-2 border border-secondary text-secondary hover:bg-secondary hover:text-primary transition-colors font-bold rounded">צפו
+                            class="px-6 py-2 border border-secondary text-secondary hover:bg-secondary hover:text-primary transition-colors duration-200 font-bold rounded cursor-pointer">צפו
                             בכל השמחות</button>
                     </div>
                 </div>
@@ -231,9 +456,9 @@
         <section class="py-24 px-4 bg-background-light relative overflow-hidden">
             <canvas id="canvas-cta" class="absolute inset-0 w-full h-full z-0 opacity-80 pointer-events-none"></canvas>
             <div
-                class="max-w-4xl mx-auto text-center border-y-2 border-slate-100 py-16 relative z-10 bg-white/70 backdrop-blur-sm rounded-3xl shadow-sm">
+                class="max-w-4xl mx-auto text-center border-y-2 border-slate-100 py-16 relative z-10 bg-white/70 backdrop-blur-sm rounded-3xl shadow-sm reveal">
                 <div
-                    class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-8 py-2 rounded-full border border-slate-100 shadow-sm flex items-center justify-center">
+                    class="cta-icon absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-8 py-2 rounded-full border border-slate-100 shadow-sm flex items-center justify-center cursor-pointer">
                     <span class="material-symbols-outlined text-5xl text-primary">family_history</span>
                 </div>
                 <h2 class="text-3xl md:text-4xl font-black text-primary mb-6 font-display">התחילו את המסע שלכם עוד היום
@@ -242,18 +467,18 @@
                     את זיווגם בדרך מכובדת, מאובטחת ומקצועית. הצטרפו אלינו בביטחון מלא.</p>
                 <div class="flex flex-col sm:flex-row gap-6 justify-center">
                     <button
-                        class="flex items-center justify-center px-10 py-4 text-lg font-bold text-white bg-primary hover:bg-slate-800 rounded-lg shadow-xl shadow-primary/20 transition-all transform hover:-translate-y-1">
+                        class="flex items-center justify-center px-10 py-4 text-lg font-bold text-white bg-primary hover:bg-slate-800 rounded-lg shadow-xl shadow-primary/20 transition-all duration-200 transform hover:-translate-y-1 cursor-pointer btn-shine">
                         יצירת פרופיל (חינם)
                     </button>
                     <button
-                        class="flex items-center justify-center px-10 py-4 text-lg font-bold text-primary border-2 border-primary hover:bg-primary/5 rounded-lg transition-colors">
+                        class="flex items-center justify-center px-10 py-4 text-lg font-bold text-primary border-2 border-primary hover:bg-primary/5 rounded-lg transition-colors duration-200 cursor-pointer">
                         שיחה עם שדכן/ית
                     </button>
                 </div>
             </div>
         </section>
     </main>
-    <footer class="bg-deep-blue text-slate-400 py-16 border-t-4 border-secondary">
+    <footer class="bg-deep-blue text-slate-400 py-16 border-t-4 border-secondary reveal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-right">
                 <div>
@@ -377,6 +602,84 @@
         document.addEventListener('DOMContentLoaded', () => {
             new SacredGeometryCanvas('canvas-hero');
             new SacredGeometryCanvas('canvas-cta');
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            /* ===== SCROLL-REVEAL with IntersectionObserver ===== */
+            const revealElements = document.querySelectorAll('.reveal, .reveal-right, .reveal-scale');
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Stagger children in grids
+                        const parent = entry.target.parentElement;
+                        if (parent && (parent.classList.contains('grid') || parent.id === 'steps-grid')) {
+                            const siblings = Array.from(parent.querySelectorAll('.reveal, .reveal-right, .reveal-scale'));
+                            const idx = siblings.indexOf(entry.target);
+                            entry.target.style.transitionDelay = `${idx * 120}ms`;
+                        }
+                        entry.target.classList.add('revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            /* ===== HEADER SHADOW ON SCROLL ===== */
+            const header = document.getElementById('main-header');
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 20) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                }, { passive: true });
+            }
+
+            /* ===== ANIMATED COUNTER ===== */
+            const counterEl = document.getElementById('counter');
+            if (counterEl) {
+                let counted = false;
+                const target = parseInt(counterEl.dataset.target, 10);
+
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !counted) {
+                            counted = true;
+                            animateCounter(counterEl, target, 2000);
+                            counterObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                counterObserver.observe(counterEl);
+            }
+
+            function animateCounter(el, target, duration) {
+                const start = performance.now();
+                const easeOutQuart = t => 1 - Math.pow(1 - t, 4);
+
+                function update(now) {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const current = Math.round(easeOutQuart(progress) * target);
+                    el.textContent = current.toLocaleString();
+                    if (progress < 1) requestAnimationFrame(update);
+                }
+                requestAnimationFrame(update);
+            }
+
+            /* ===== NAV LINK HOVER UNDERLINE ANIMATION ===== */
+            document.querySelectorAll('nav a').forEach(link => {
+                link.style.position = 'relative';
+                link.addEventListener('mouseenter', () => {
+                    link.style.transition = 'color 0.2s ease';
+                });
+            });
         });
     </script>
 </body>
