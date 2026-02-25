@@ -87,7 +87,8 @@
         </div>
     </header>
     <main class="flex-grow">
-        <section class="relative py-16 md:py-24 bg-cream/40 border-b border-secondary/10">
+        <section class="relative py-16 md:py-24 bg-cream/40 border-b border-secondary/10 overflow-hidden">
+            <canvas id="canvas-hero" class="absolute inset-0 w-full h-full z-0 opacity-80 pointer-events-none"></canvas>
             <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
                 <div
                     class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-sm font-bold mb-8 border border-primary/10">
@@ -227,9 +228,12 @@
                 </div>
             </div>
         </section>
-        <section class="py-24 px-4 bg-background-light">
-            <div class="max-w-4xl mx-auto text-center border-y-2 border-slate-100 py-16 relative">
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-8">
+        <section class="py-24 px-4 bg-background-light relative overflow-hidden">
+            <canvas id="canvas-cta" class="absolute inset-0 w-full h-full z-0 opacity-80 pointer-events-none"></canvas>
+            <div
+                class="max-w-4xl mx-auto text-center border-y-2 border-slate-100 py-16 relative z-10 bg-white/70 backdrop-blur-sm rounded-3xl shadow-sm">
+                <div
+                    class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-8 py-2 rounded-full border border-slate-100 shadow-sm flex items-center justify-center">
                     <span class="material-symbols-outlined text-5xl text-primary">family_history</span>
                 </div>
                 <h2 class="text-3xl md:text-4xl font-black text-primary mb-6 font-display">התחילו את המסע שלכם עוד היום
@@ -280,6 +284,101 @@
         </div>
     </footer>
 
+    <script>
+        class SacredGeometryCanvas {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d', { alpha: true });
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.time = 0;
+
+                this.mouseX = this.width / 2;
+                this.mouseY = this.height / 2;
+                this.targetMouseX = this.mouseX;
+                this.targetMouseY = this.mouseY;
+
+                this.canvas.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.targetMouseX = e.clientX - rect.left;
+                    this.targetMouseY = e.clientY - rect.top;
+                });
+
+                this.animate = this.animate.bind(this);
+                requestAnimationFrame(this.animate);
+            }
+
+            resize() {
+                const parent = this.canvas.parentElement;
+                this.width = parent.offsetWidth;
+                this.height = parent.offsetHeight;
+                this.canvas.width = this.width * window.devicePixelRatio;
+                this.canvas.height = this.height * window.devicePixelRatio;
+                this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            }
+
+            drawArc(x, y, radius, startAngle, endAngle, color, lineWidth) {
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, radius, startAngle, endAngle);
+                this.ctx.strokeStyle = color;
+                this.ctx.lineWidth = lineWidth;
+                this.ctx.stroke();
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                this.time += 0.002;
+
+                this.mouseX += (this.targetMouseX - this.mouseX) * 0.05;
+                this.mouseY += (this.targetMouseY - this.mouseY) * 0.05;
+
+                const centerX = (this.width / 2) + (this.mouseX - this.width / 2) * 0.05;
+                const centerY = (this.height / 2) + (this.mouseY - this.height / 2) * 0.05;
+
+                const maxRadius = Math.max(this.width, this.height) * 0.8;
+
+                const tealAlpha = 'rgba(15, 118, 110, 0.1)'; // #0f766e
+                const goldAlpha = 'rgba(212, 168, 83, 0.15)'; // #d4a853
+
+                for (let i = 1; i <= 12; i++) {
+                    let r = (maxRadius * (i / 12)) + Math.sin(this.time + i) * 15;
+                    let angleOffset = this.time * (i % 2 === 0 ? 1 : -1) * (0.3 + 1 / i);
+
+                    this.drawArc(centerX, centerY, r, angleOffset, angleOffset + Math.PI * 1.2, tealAlpha, 1.5);
+                    this.drawArc(centerX, centerY, r + (i * 2), -angleOffset, -angleOffset + Math.PI * 0.6, goldAlpha, 0.5);
+
+                    if (i % 3 === 0) {
+                        this.drawArc(centerX, centerY, r, 0, Math.PI * 2, 'rgba(212, 168, 83, 0.04)', 1);
+                    }
+                }
+
+                this.ctx.beginPath();
+                for (let i = 0; i < 24; i++) {
+                    let angle = (Math.PI * 2 / 24) * i + this.time * 0.05;
+                    let innerRadius = maxRadius * 0.1 + Math.sin(this.time * 2 + i) * 10;
+
+                    let startX = centerX + Math.cos(angle) * innerRadius;
+                    let startY = centerY + Math.sin(angle) * innerRadius;
+                    let endX = centerX + Math.cos(angle) * maxRadius;
+                    let endY = centerY + Math.sin(angle) * maxRadius;
+
+                    this.ctx.moveTo(startX, startY);
+                    this.ctx.lineTo(endX, endY);
+                }
+                this.ctx.strokeStyle = 'rgba(15, 118, 110, 0.04)';
+                this.ctx.lineWidth = 1;
+                this.ctx.stroke();
+
+                requestAnimationFrame(this.animate);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new SacredGeometryCanvas('canvas-hero');
+            new SacredGeometryCanvas('canvas-cta');
+        });
+    </script>
 </body>
 
 </html>

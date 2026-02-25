@@ -20,13 +20,13 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: "#0A2540", // Dark Blue
-                        secondary: "#C5A059", // Light Gold
-                        "secondary-hover": "#B08D48",
-                        "background-light": "#FFFFFF",
-                        "background-dark": "#061A2D",
-                        "surface-light": "#F3F6F9",
-                        "surface-dark": "#0D2B47",
+                        primary: "#0f766e", // Deep Teal
+                        secondary: "#d4a853", // Warm Gold
+                        "secondary-hover": "#bfa054",
+                        "background-light": "#faf7f0", // Soft cream
+                        "background-dark": "#0f172a", // Slate dark
+                        "surface-light": "#f0ede6",
+                        "surface-dark": "#1e293b",
                     },
                     fontFamily: {
                         display: ["Rubik", "sans-serif"],
@@ -93,11 +93,10 @@
     </nav>
     <div class="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img alt="Blurred library background"
-                class="w-full h-full object-cover object-center opacity-10 dark:opacity-20 blur-sm"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-HppSGQgkQUWoIGMxtqlF8FWPmB5UK1Ru2lTiTco3SNmlP1iBY5jfENYGs-u_MnFiSQCwpgWEC_Ba1s8GgmDEQvtNWm7tlf2FjpD8VNC-vsOZqFtuRQNTHSI2RXkaRn3ZJn6HM_jFIQqFI_1YXZ2_mheAu0CBrw11NKphk_JQjA5FIWvp-TSlpSJX-3QoOKcnO4EZ1AnTg-ERKE5qtnUZEBNKydkfJkRFvd-5t1BsKKE4HHeJl25e0fm2TyXpJUDpu7CO0w2O5bI" />
+            <canvas id="sacred-geometry-1"
+                class="absolute inset-0 w-full h-full opacity-60 pointer-events-none"></canvas>
             <div
-                class="absolute inset-0 bg-gradient-to-b from-background-light/80 via-background-light/50 to-background-light dark:from-background-dark/80 dark:via-background-dark/50 dark:to-background-dark">
+                class="absolute inset-0 bg-gradient-to-b from-background-light/80 via-background-light/50 to-background-light dark:from-background-dark/80 dark:via-background-dark/50 dark:to-background-dark pointer-events-none">
             </div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -205,8 +204,13 @@
         </div>
     </section>
     <section class="py-16 bg-white dark:bg-background-dark relative overflow-hidden">
-        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+        <canvas id="sacred-geometry-2" class="absolute inset-0 w-full h-full opacity-30 pointer-events-none"></canvas>
+        <div
+            class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-secondary/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none">
+        </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
                 <div class="mb-10 lg:mb-0">
@@ -250,8 +254,11 @@
             </div>
         </div>
     </section>
-    <section class="py-20 bg-surface-light dark:bg-surface-dark/50 border-y border-gray-100 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+        class="py-20 bg-surface-light dark:bg-surface-dark/50 border-y border-gray-100 dark:border-gray-800 relative overflow-hidden">
+        <canvas id="sacred-geometry-3"
+            class="absolute inset-0 w-full h-full opacity-30 pointer-events-none z-0"></canvas>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-primary dark:text-white mb-4">מרכז ייעוץ וקשר</h2>
                 <div class="h-1.5 w-24 bg-secondary mx-auto rounded-full"></div>
@@ -449,6 +456,108 @@
         </div>
     </footer>
 
+    <script>
+        function drawSacredGeometry(canvasId, seed) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const resize = () => {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                canvas.width = rect.width * window.devicePixelRatio;
+                canvas.height = rect.height * window.devicePixelRatio;
+                ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            };
+
+            const draw = (rotOffset) => {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                const width = rect.width;
+                const height = rect.height;
+
+                ctx.clearRect(0, 0, width, height);
+
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const maxRadius = Math.max(width, height) * 0.9;
+
+                const isDark = document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
+                const primary = isDark ? '#14b8a6' : '#0f766e'; // Teal
+                const gold = '#d4a853';   // Warm gold
+
+                const baseRot = seed * Math.PI / 3;
+
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(baseRot + rotOffset);
+
+                const rings = 12 + (seed % 4);
+
+                for (let i = 1; i <= rings; i++) {
+                    const radius = (maxRadius / rings) * i * 0.85;
+
+                    // Concentric circles
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+                    ctx.lineWidth = i % 2 === 0 ? 0.5 : 1.5;
+                    ctx.strokeStyle = i % 3 === 0 ? gold : primary;
+                    ctx.globalAlpha = 0.15 + (0.05 * (i % 5));
+                    ctx.stroke();
+
+                    // Nested Arcs
+                    if (i % 2 !== 0 && i > 2) {
+                        const segments = 8;
+                        const reverseRot = i % 3 === 0 ? -rotOffset * 2 : rotOffset * 1.5;
+                        for (let j = 0; j < segments; j++) {
+                            ctx.beginPath();
+                            const angle = (Math.PI * 2 / segments) * j + (i * 0.15) + reverseRot;
+                            const arcLength = Math.PI / 6;
+                            ctx.arc(0, 0, radius + 15, angle, angle + arcLength);
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = gold;
+                            ctx.globalAlpha = 0.3;
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Radiating lines
+                    if (i === rings - 3) {
+                        const rays = 36;
+                        for (let j = 0; j < rays; j++) {
+                            const angle = (Math.PI * 2 / rays) * j;
+                            const innerR = radius - 30;
+                            const outerR = radius + 30;
+                            ctx.beginPath();
+                            ctx.moveTo(Math.cos(angle) * innerR, Math.sin(angle) * innerR);
+                            ctx.lineTo(Math.cos(angle) * outerR, Math.sin(angle) * outerR);
+                            ctx.lineWidth = 0.5;
+                            ctx.strokeStyle = i % 2 === 0 ? primary : gold;
+                            ctx.globalAlpha = 0.2;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                ctx.restore();
+            };
+
+            window.addEventListener('resize', resize);
+            resize();
+
+            let rotationOffset = 0;
+            const animate = () => {
+                rotationOffset += 0.0005 * (seed % 2 === 0 ? 1 : -0.8);
+                draw(rotationOffset);
+                requestAnimationFrame(animate);
+            };
+            requestAnimationFrame(animate);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            drawSacredGeometry('sacred-geometry-1', 1);
+            drawSacredGeometry('sacred-geometry-2', 2);
+            drawSacredGeometry('sacred-geometry-3', 3);
+        });
+    </script>
 </body>
 
 </html>

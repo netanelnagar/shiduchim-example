@@ -135,7 +135,9 @@
                     </div>
                 </div>
             </section>
-            <section class="py-16 bg-white dark:bg-slate-900 border-y border-slate-100 dark:border-slate-800">
+            <section
+                class="py-16 bg-white dark:bg-slate-900 border-y border-slate-100 dark:border-slate-800 relative overflow-hidden">
+                <canvas id="canvas-weave" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
                 <div class="max-w-[1200px] mx-auto px-6 lg:px-20">
                     <div class="flex justify-between items-end mb-12">
                         <div class="max-w-xl">
@@ -245,7 +247,77 @@
                     </div>
                 </div>
             </section>
-            <section class="py-20 px-6 lg:px-20 max-w-[1200px] mx-auto">
+            <script>
+                    (function () {
+                        const canvas = document.getElementById('canvas-weave');
+                        if (!canvas) return;
+                        const ctx = canvas.getContext('2d');
+                        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                        let w, h, time = 0;
+
+                        function resize() {
+                            const s = canvas.parentElement;
+                            const dpr = window.devicePixelRatio || 1;
+                            w = s.offsetWidth; h = s.offsetHeight;
+                            canvas.width = w * dpr; canvas.height = h * dpr;
+                            canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+                            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                        }
+
+                        function draw() {
+                            ctx.clearRect(0, 0, w, h);
+                            // Woven horizontal threads
+                            for (let i = 0; i < 8; i++) {
+                                const baseY = h * (0.08 + i * 0.12);
+                                ctx.beginPath();
+                                for (let x = 0; x <= w; x += 2) {
+                                    const phase = time * 0.0002 + i * 0.7;
+                                    const y = baseY + Math.sin(x * 0.006 + phase) * (10 + i * 3) + Math.cos(x * 0.003 + phase * 1.3) * 6;
+                                    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                                }
+                                ctx.strokeStyle = i % 3 === 0 ? '#b45309' : '#1e3a8a';
+                                ctx.globalAlpha = 0.04 + (i === 4 ? 0.02 : 0);
+                                ctx.lineWidth = i % 3 === 0 ? 1.2 : 0.5;
+                                ctx.stroke();
+                            }
+                            // Intersection nodes
+                            for (let i = 0; i < 30; i++) {
+                                const angle = (1.618033988 * Math.PI * 2 * i) + time * 0.00002;
+                                const dist = Math.sqrt(i / 30) * Math.min(w, h) * 0.45;
+                                const x = w / 2 + Math.cos(angle) * dist;
+                                const y = h / 2 + Math.sin(angle) * dist;
+                                const pulse = 1 + Math.sin(time * 0.002 + i * 0.4) * 0.3;
+                                ctx.beginPath();
+                                ctx.arc(x, y, 1.5 * pulse, 0, Math.PI * 2);
+                                ctx.globalAlpha = 0.06;
+                                ctx.fillStyle = i % 5 === 0 ? '#b45309' : '#1e3a8a';
+                                ctx.fill();
+                            }
+                            // Vertical warp threads (very subtle)
+                            for (let i = 0; i < 12; i++) {
+                                const baseX = w * (0.05 + i * 0.08);
+                                ctx.beginPath();
+                                for (let y = 0; y <= h; y += 2) {
+                                    const phase = time * 0.00015 + i * 0.5;
+                                    const x = baseX + Math.sin(y * 0.008 + phase) * 8;
+                                    y === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                                }
+                                ctx.strokeStyle = '#1e3a8a';
+                                ctx.globalAlpha = 0.02;
+                                ctx.lineWidth = 0.3;
+                                ctx.stroke();
+                            }
+                            ctx.globalAlpha = 1;
+                        }
+
+                        function animate() { time += 16; draw(); if (!reduced) requestAnimationFrame(animate); }
+                        resize();
+                        window.addEventListener('resize', () => { resize(); draw(); });
+                        if (reduced) { time = 5000; draw(); } else { animate(); }
+                    })();
+            </script>
+            <section class="py-20 px-6 lg:px-20 max-w-[1200px] mx-auto relative overflow-hidden">
+                <canvas id="canvas-nodes" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
                 <div class="flex flex-col gap-12">
                     <div class="flex flex-col gap-3 text-center items-center">
                         <h2
@@ -308,9 +380,97 @@
                     </div>
                 </div>
             </section>
+            <script>
+                (function () {
+                    const canvas = document.getElementById('canvas-nodes');
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    let w, h, time = 0;
+                    const nodes = [];
+
+                    function resize() {
+                        const s = canvas.parentElement;
+                        const dpr = window.devicePixelRatio || 1;
+                        w = s.offsetWidth; h = s.offsetHeight;
+                        canvas.width = w * dpr; canvas.height = h * dpr;
+                        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+                        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                        if (nodes.length === 0) {
+                            for (let i = 0; i < 50; i++) {
+                                nodes.push({
+                                    x: Math.random() * w, y: Math.random() * h,
+                                    r: 0.5 + Math.random() * 1.5,
+                                    vx: (Math.random() - 0.5) * 0.15,
+                                    vy: (Math.random() - 0.5) * 0.15,
+                                    phase: Math.random() * Math.PI * 2
+                                });
+                            }
+                        }
+                    }
+
+                    function draw() {
+                        ctx.clearRect(0, 0, w, h);
+                        // Update node positions
+                        nodes.forEach(n => {
+                            n.x += n.vx; n.y += n.vy;
+                            if (n.x < 0 || n.x > w) n.vx *= -1;
+                            if (n.y < 0 || n.y > h) n.vy *= -1;
+                        });
+                        // Draw connections
+                        ctx.lineWidth = 0.3;
+                        for (let i = 0; i < nodes.length; i++) {
+                            for (let j = i + 1; j < nodes.length; j++) {
+                                const dx = nodes[i].x - nodes[j].x;
+                                const dy = nodes[i].y - nodes[j].y;
+                                const dist = Math.sqrt(dx * dx + dy * dy);
+                                if (dist < 100) {
+                                    ctx.globalAlpha = 0.04 * (1 - dist / 100);
+                                    ctx.strokeStyle = '#1e3a8a';
+                                    ctx.beginPath();
+                                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                                    // Bezier curve for elegance
+                                    const mx = (nodes[i].x + nodes[j].x) / 2;
+                                    const my = (nodes[i].y + nodes[j].y) / 2 - 10;
+                                    ctx.quadraticCurveTo(mx, my, nodes[j].x, nodes[j].y);
+                                    ctx.stroke();
+                                }
+                            }
+                        }
+                        // Draw nodes
+                        nodes.forEach((n, i) => {
+                            const pulse = 0.6 + Math.sin(time * 0.002 + n.phase) * 0.4;
+                            ctx.beginPath();
+                            ctx.arc(n.x, n.y, n.r * pulse, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.08 + pulse * 0.04;
+                            ctx.fillStyle = i % 6 === 0 ? '#b45309' : '#1e3a8a';
+                            ctx.fill();
+                        });
+                        // Concentric arcs from center
+                        const cx = w / 2, cy = h / 2;
+                        for (let i = 1; i <= 4; i++) {
+                            const r = i * Math.min(w, h) * 0.1;
+                            const startAngle = time * 0.0001 * (i % 2 === 0 ? 1 : -1);
+                            ctx.beginPath();
+                            ctx.arc(cx, cy, r, startAngle, startAngle + Math.PI * 0.5);
+                            ctx.globalAlpha = 0.025;
+                            ctx.strokeStyle = i === 2 ? '#b45309' : '#1e3a8a';
+                            ctx.lineWidth = 0.6;
+                            ctx.stroke();
+                        }
+                        ctx.globalAlpha = 1;
+                    }
+
+                    function animate() { time += 16; draw(); if (!reduced) requestAnimationFrame(animate); }
+                    resize();
+                    window.addEventListener('resize', () => { resize(); draw(); });
+                    if (reduced) { time = 5000; draw(); } else { animate(); }
+                })();
+            </script>
             <section class="py-20 px-6">
                 <div
                     class="max-w-5xl mx-auto text-center bg-primary rounded-[2rem] p-10 lg:p-20 text-white shadow-2xl relative overflow-hidden">
+                    <canvas id="canvas-cta2" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
                     <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none"
                         style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'0 0 2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
                     </div>
@@ -336,8 +496,83 @@
                     </div>
                 </div>
             </section>
+            <script>
+                (function () {
+                    const canvas = document.getElementById('canvas-cta2');
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    let w, h, time = 0;
+
+                    function resize() {
+                        const c = canvas.parentElement;
+                        const dpr = window.devicePixelRatio || 1;
+                        w = c.offsetWidth; h = c.offsetHeight;
+                        canvas.width = w * dpr; canvas.height = h * dpr;
+                        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+                        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                    }
+
+                    function draw() {
+                        ctx.clearRect(0, 0, w, h);
+                        const cx = w / 2, cy = h / 2;
+                        // Expanding ripple rings
+                        for (let i = 0; i < 6; i++) {
+                            const expandT = ((time * 0.0004 + i * 0.167) % 1);
+                            const r = expandT * Math.max(w, h) * 0.6;
+                            ctx.beginPath();
+                            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.07 * (1 - expandT);
+                            ctx.strokeStyle = '#ffffff';
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+                        }
+                        // Star-of-David hexagonal pattern
+                        const spacing = 60;
+                        ctx.strokeStyle = '#ffffff';
+                        ctx.lineWidth = 0.3;
+                        ctx.globalAlpha = 0.035;
+                        for (let x = -spacing; x < w + spacing; x += spacing) {
+                            for (let y = -spacing; y < h + spacing; y += spacing * 0.866) {
+                                const ox = (Math.floor(y / (spacing * 0.866)) % 2) * spacing / 2;
+                                const px = x + ox;
+                                // Small hexagon
+                                ctx.beginPath();
+                                for (let k = 0; k < 6; k++) {
+                                    const a = Math.PI / 3 * k + Math.PI / 6;
+                                    const hx = px + 10 * Math.cos(a);
+                                    const hy = y + 10 * Math.sin(a);
+                                    k === 0 ? ctx.moveTo(hx, hy) : ctx.lineTo(hx, hy);
+                                }
+                                ctx.closePath();
+                                ctx.stroke();
+                            }
+                        }
+                        // Floating particles rising upward
+                        for (let i = 0; i < 18; i++) {
+                            const seed = i * 5.17;
+                            const x = (seed * 137.508) % w;
+                            const yBase = h - ((time * 0.015 + seed * 35) % (h + 30));
+                            const sway = Math.sin(time * 0.001 + seed) * 12;
+                            ctx.beginPath();
+                            ctx.arc(x + sway, yBase, 1.2, 0, Math.PI * 2);
+                            ctx.globalAlpha = 0.15;
+                            ctx.fillStyle = i % 4 === 0 ? '#fbbf24' : '#ffffff';
+                            ctx.fill();
+                        }
+                        ctx.globalAlpha = 1;
+                    }
+
+                    function animate() { time += 16; draw(); if (!reduced) requestAnimationFrame(animate); }
+                    resize();
+                    window.addEventListener('resize', () => { resize(); draw(); });
+                    if (reduced) { time = 5000; draw(); } else { animate(); }
+                })();
+            </script>
         </main>
-        <footer class="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+        <footer
+            class="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pt-16 pb-8 relative overflow-hidden">
+            <canvas id="canvas-footer2" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
             <div class="max-w-[1200px] mx-auto px-6 lg:px-20 flex flex-col gap-10">
                 <div class="flex flex-col md:flex-row justify-between gap-12">
                     <div class="flex flex-col gap-4 max-w-sm text-right">
@@ -399,6 +634,60 @@
             </div>
         </footer>
     </div>
+    <script>
+        (function () {
+            const canvas = document.getElementById('canvas-footer2');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let w, h, time = 0;
+
+            function resize() {
+                const s = canvas.parentElement;
+                const dpr = window.devicePixelRatio || 1;
+                w = s.offsetWidth; h = s.offsetHeight;
+                canvas.width = w * dpr; canvas.height = h * dpr;
+                canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                // Gentle undulating waves
+                for (let wave = 0; wave < 4; wave++) {
+                    ctx.beginPath();
+                    for (let x = 0; x <= w; x += 3) {
+                        const phase = time * 0.00015 + wave * 1.0;
+                        const y = h * (0.25 + wave * 0.17) + Math.sin(x * 0.003 + phase) * (8 + wave * 4) + Math.cos(x * 0.006 + phase * 1.5) * 4;
+                        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = wave === 1 ? '#b45309' : '#1e3a8a';
+                    ctx.globalAlpha = 0.025;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+                // Dot matrix grid
+                const spacing = 35;
+                ctx.fillStyle = '#1e3a8a';
+                for (let x = spacing; x < w; x += spacing) {
+                    for (let y = spacing; y < h; y += spacing) {
+                        const d = Math.sqrt((x - w / 2) ** 2 + (y - h / 2) ** 2);
+                        const pulse = Math.sin(time * 0.001 + d * 0.004) * 0.3;
+                        ctx.globalAlpha = 0.015 + pulse * 0.008;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 0.7, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            function animate() { time += 16; draw(); if (!reduced) requestAnimationFrame(animate); }
+            resize();
+            window.addEventListener('resize', () => { resize(); draw(); });
+            if (reduced) { time = 5000; draw(); } else { animate(); }
+        })();
+    </script>
 
 </body>
 

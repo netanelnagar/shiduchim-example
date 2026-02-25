@@ -88,10 +88,9 @@
         </div>
     </header>
     <main class="flex-grow">
-        <section class="relative py-20 md:py-32 bg-[var(--off-white)]">
-            <div class="absolute inset-0 opacity-40 pointer-events-none overflow-hidden">
-                <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-50 rounded-full blur-3xl"></div>
-                <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-slate-100 rounded-full blur-3xl"></div>
+        <section class="relative py-20 md:py-32 bg-[#faf7f0]">
+            <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <canvas class="sacred-geometry-canvas w-full h-full opacity-60" data-variant="hero"></canvas>
             </div>
             <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
                 <div
@@ -113,8 +112,11 @@
                 </p>
             </div>
         </section>
-        <section class="pb-24 px-4">
-            <div class="max-w-4xl mx-auto">
+        <section class="relative pb-24 px-4 overflow-hidden">
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <canvas class="sacred-geometry-canvas w-full h-full" data-variant="timeline"></canvas>
+            </div>
+            <div class="relative z-10 max-w-4xl mx-auto">
                 <div class="relative">
                     <div
                         class="absolute right-[28px] md:right-1/2 top-0 bottom-0 w-px bg-slate-200 -translate-x-1/2 md:translate-x-0 hidden md:block">
@@ -164,9 +166,9 @@
                     <div class="relative z-10 flex flex-col md:flex-row items-stretch gap-0 mb-24 mt-12">
                         <div class="hidden md:block absolute right-1/2 w-0.5 h-full bg-blue-100 -translate-x-1/2"></div>
                         <div
-                            class="w-full bg-white border-2 border-primary/20 rounded-2xl p-8 md:p-12 shadow-2xl shadow-blue-900/5 relative overflow-hidden group">
-                            <div
-                                class="absolute -left-10 -top-10 w-40 h-40 bg-blue-50 rounded-full opacity-50 group-hover:scale-110 transition-transform">
+                            class="w-full bg-white border-2 border-[#0f766e]/15 rounded-2xl p-8 md:p-12 shadow-2xl shadow-[#0f766e]/5 relative overflow-hidden group">
+                            <div class="absolute inset-0 pointer-events-none">
+                                <canvas class="sacred-geometry-canvas w-full h-full" data-variant="card"></canvas>
                             </div>
                             <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
                                 <div
@@ -219,8 +221,8 @@
                     <div class="relative z-10 mb-20">
                         <div
                             class="bg-slate-900 rounded-2xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
-                            <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none">
-                                <span class="material-symbols-outlined text-[200px]">volunteer_activism</span>
+                            <div class="absolute inset-0 pointer-events-none">
+                                <canvas class="sacred-geometry-canvas w-full h-full" data-variant="banner"></canvas>
                             </div>
                             <div class="flex flex-col md:flex-row justify-between items-center gap-10 relative z-10">
                                 <div class="max-w-xl">
@@ -251,8 +253,11 @@
                 </div>
             </div>
         </section>
-        <section class="py-24 bg-white border-y border-slate-100">
-            <div class="max-w-6xl mx-auto px-4">
+        <section class="relative py-24 bg-white border-y border-slate-100 overflow-hidden">
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <canvas class="sacred-geometry-canvas w-full h-full" data-variant="stats"></canvas>
+            </div>
+            <div class="relative z-10 max-w-6xl mx-auto px-4">
                 <div class="flex flex-col md:flex-row items-end justify-between gap-8 mb-16">
                     <div>
                         <h2 class="text-5xl font-black text-slate-900 mb-4 italic">מזל טוב!</h2>
@@ -309,11 +314,14 @@
                 </div>
             </div>
         </section>
-        <section class="py-24 px-4 bg-slate-50">
+        <section class="relative py-24 px-4 bg-[#faf7f0] overflow-hidden">
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <canvas class="sacred-geometry-canvas w-full h-full opacity-60" data-variant="cta"></canvas>
+            </div>
             <div
-                class="max-w-4xl mx-auto text-center bg-white rounded-3xl shadow-sm p-12 md:p-20 border border-slate-200">
+                class="relative z-10 max-w-4xl mx-auto text-center bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-12 md:p-20 border border-[#d4a853]/30">
                 <div
-                    class="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-8 text-primary">
+                    class="inline-flex items-center justify-center w-20 h-20 bg-[#0f766e]/10 rounded-full mb-8 text-[#0f766e]">
                     <span class="material-symbols-outlined text-4xl">temple_buddhist</span>
                 </div>
                 <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6">מוכנים למצוא את המשלים שלכם?</h2>
@@ -347,6 +355,359 @@
         </div>
     </footer>
 
+    <script>
+            (function () {
+                'use strict';
+
+                /* ── Sacred Geometry Palette ── */
+                const TEAL = [15, 118, 110];   // #0f766e
+                const GOLD = [212, 168, 83];   // #d4a853
+                const SLATE = [71, 85, 105];    // #475569
+                const PHI = (1 + Math.sqrt(5)) / 2;  // Golden ratio ≈ 1.618
+
+                function rgba(c, a) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
+
+                /* ── Helpers ── */
+                function circle(ctx, x, y, r) {
+                    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke();
+                }
+                function arc(ctx, x, y, r, start, end) {
+                    ctx.beginPath(); ctx.arc(x, y, r, start, end); ctx.stroke();
+                }
+                function line(ctx, x1, y1, x2, y2) {
+                    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+                }
+
+                /* Draw a Vesica Piscis — two overlapping circles whose centers
+                   are separated by exactly one radius.  Symbol of union. */
+                function vesicaPiscis(ctx, cx, cy, r, color, alpha) {
+                    const d = r * 0.577; // r / √3  — classic vesica proportion
+                    ctx.strokeStyle = rgba(color, alpha);
+                    circle(ctx, cx - d, cy, r);
+                    circle(ctx, cx + d, cy, r);
+                }
+
+                /* Flower‑of‑Life ring: six circles arranged around a center */
+                function flowerRing(ctx, cx, cy, r, color, alpha) {
+                    ctx.strokeStyle = rgba(color, alpha);
+                    circle(ctx, cx, cy, r);
+                    for (let i = 0; i < 6; i++) {
+                        const a = Math.PI / 3 * i;
+                        circle(ctx, cx + Math.cos(a) * r, cy + Math.sin(a) * r, r);
+                    }
+                }
+
+                /* Golden spiral approximation from quarter‑arcs */
+                function goldenSpiral(ctx, cx, cy, baseR, turns, dir, color, alpha) {
+                    ctx.strokeStyle = rgba(color, alpha);
+                    ctx.beginPath();
+                    let r = baseR;
+                    let x = cx, y = cy;
+                    for (let i = 0; i < turns * 4; i++) {
+                        const startAngle = (Math.PI / 2) * i * dir;
+                        ctx.arc(x, y, r, startAngle, startAngle + (Math.PI / 2) * dir, dir < 0);
+                        const nextR = r / PHI;
+                        x += Math.cos(startAngle + (Math.PI / 2) * dir) * (r - nextR);
+                        y += Math.sin(startAngle + (Math.PI / 2) * dir) * (r - nextR);
+                        r = nextR;
+                    }
+                    ctx.stroke();
+                }
+
+                /* Parchment grain — scattered semi‑transparent dots */
+                function parchmentGrain(ctx, w, h, density, color, alpha) {
+                    const count = Math.floor(w * h * density / 10000);
+                    for (let i = 0; i < count; i++) {
+                        const x = Math.random() * w;
+                        const y = Math.random() * h;
+                        const s = Math.random() * 1.2 + 0.3;
+                        ctx.fillStyle = rgba(color, alpha * (0.3 + Math.random() * 0.7));
+                        ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2); ctx.fill();
+                    }
+                }
+
+                /* ═══════════════════════════════════════════════
+                   Variant renderers — one per section
+                   ═══════════════════════════════════════════════ */
+
+                function drawHero(ctx, w, h, t) {
+                    const cx = w / 2, cy = h * 0.45;
+                    const unit = Math.min(w, h) * 0.08;
+
+                    // Subtle parchment grain background
+                    parchmentGrain(ctx, w, h, 6, GOLD, 0.04);
+
+                    // 1) Large concentric emanation — varying weights
+                    for (let i = 1; i <= 12; i++) {
+                        const r = unit * i;
+                        ctx.lineWidth = i % 3 === 0 ? 1.5 : 0.5;
+                        ctx.strokeStyle = rgba(TEAL, 0.06 + 0.015 * (12 - i));
+                        circle(ctx, cx, cy, r);
+                    }
+
+                    // 2) Vesica Piscis at the heart — "two halves becoming whole"
+                    ctx.lineWidth = 1.8;
+                    vesicaPiscis(ctx, cx, cy, unit * 3.5, GOLD, 0.18);
+
+                    // 3) Mirrored sweeping arcs — "arching vaults"
+                    ctx.lineWidth = 0.7;
+                    for (let i = 1; i <= 7; i++) {
+                        const r = unit * 2 * i;
+                        ctx.strokeStyle = rgba(TEAL, 0.05);
+                        // Left vault
+                        arc(ctx, cx - unit * 4, cy + h * 0.1, r, -Math.PI * 0.45, Math.PI * 0.3);
+                        // Right vault (mirrored)
+                        arc(ctx, cx + unit * 4, cy + h * 0.1, r, Math.PI * 0.7, Math.PI * 1.45);
+                    }
+
+                    // 4) Radiating golden threads — 24 rays
+                    ctx.lineWidth = 0.4;
+                    ctx.strokeStyle = rgba(GOLD, 0.07);
+                    const rayLen = Math.max(w, h) * 0.9;
+                    for (let i = 0; i < 24; i++) {
+                        const a = (Math.PI * 2 / 24) * i + t * 0.0001;
+                        line(ctx, cx, cy, cx + Math.cos(a) * rayLen, cy + Math.sin(a) * rayLen);
+                    }
+
+                    // 5) Two golden spirals — reaching toward each other
+                    ctx.lineWidth = 1;
+                    goldenSpiral(ctx, cx - unit * 2, cy, unit * 4, 3, 1, GOLD, 0.1);
+                    goldenSpiral(ctx, cx + unit * 2, cy, unit * 4, 3, -1, GOLD, 0.1);
+
+                    // 6) Small Flower‑of‑Life accent, offset
+                    ctx.lineWidth = 0.5;
+                    flowerRing(ctx, cx, cy, unit * 1.5, TEAL, 0.08);
+                }
+
+                function drawTimeline(ctx, w, h, t) {
+                    const cx = w / 2, cy = h / 2;
+                    const unit = Math.min(w, h) * 0.018;
+
+                    parchmentGrain(ctx, w, h, 3, GOLD, 0.025);
+
+                    // Vertical axis — thin golden line down the center
+                    ctx.strokeStyle = rgba(GOLD, 0.09);
+                    ctx.lineWidth = 0.5;
+                    line(ctx, cx, 0, cx, h);
+
+                    // Repeating arc modules along the timeline
+                    const steps = Math.floor(h / (unit * 18));
+                    for (let s = 0; s < steps; s++) {
+                        const sy = unit * 18 * s + unit * 9;
+                        const side = s % 2 === 0 ? -1 : 1;
+                        for (let i = 1; i <= 4; i++) {
+                            ctx.lineWidth = i === 2 ? 1.2 : 0.4;
+                            ctx.strokeStyle = rgba(TEAL, 0.04 + 0.01 * i);
+                            arc(ctx, cx + side * unit * 6, sy, unit * 3 * i,
+                                side > 0 ? Math.PI * 0.6 : -Math.PI * 0.4,
+                                side > 0 ? Math.PI * 1.4 : Math.PI * 0.4);
+                        }
+                        // Small connective circles
+                        ctx.lineWidth = 0.5;
+                        ctx.strokeStyle = rgba(GOLD, 0.1);
+                        circle(ctx, cx, sy, unit * 2);
+                        circle(ctx, cx, sy, unit * 3.5);
+                    }
+                }
+
+                function drawCard(ctx, w, h) {
+                    const cx = w / 2, cy = h / 2;
+                    const unit = Math.min(w, h) * 0.06;
+
+                    // Delicate Vesica at center of the card
+                    ctx.lineWidth = 0.8;
+                    vesicaPiscis(ctx, w * 0.85, h * 0.5, unit * 3, TEAL, 0.06);
+
+                    // Concentric half‑circles from the left edge
+                    for (let i = 1; i <= 5; i++) {
+                        ctx.lineWidth = i === 3 ? 1 : 0.4;
+                        ctx.strokeStyle = rgba(GOLD, 0.06);
+                        arc(ctx, 0, cy, unit * 3 * i, -Math.PI / 2, Math.PI / 2);
+                    }
+
+                    // Corner accents — small flower fragments
+                    ctx.lineWidth = 0.4;
+                    ctx.strokeStyle = rgba(TEAL, 0.05);
+                    for (let i = 0; i < 3; i++) {
+                        const a = Math.PI / 3 * i - Math.PI / 6;
+                        circle(ctx, w + Math.cos(a) * unit * 3, Math.sin(a) * unit * 3, unit * 3);
+                    }
+                }
+
+                function drawBanner(ctx, w, h, t) {
+                    const cx = w / 2, cy = h / 2;
+                    const unit = Math.min(w, h) * 0.05;
+
+                    // Light grain on dark surface
+                    parchmentGrain(ctx, w, h, 4, [200, 200, 220], 0.03);
+
+                    // Concentric golden rings, off-center right
+                    for (let i = 1; i <= 8; i++) {
+                        ctx.lineWidth = i % 4 === 0 ? 1.5 : 0.4;
+                        ctx.strokeStyle = rgba(GOLD, 0.06 + 0.008 * i);
+                        circle(ctx, w * 0.8, cy, unit * i * 1.8);
+                    }
+
+                    // Sweeping arcs from bottom-left
+                    for (let i = 1; i <= 5; i++) {
+                        ctx.lineWidth = 0.6;
+                        ctx.strokeStyle = rgba([180, 200, 220], 0.05);
+                        arc(ctx, 0, h, unit * 6 * i, -Math.PI * 0.5, 0);
+                    }
+
+                    // Vesica in the center, in pale blue-white
+                    ctx.lineWidth = 1;
+                    vesicaPiscis(ctx, cx, cy, unit * 4, [160, 190, 220], 0.08);
+                }
+
+                function drawStats(ctx, w, h, t) {
+                    const cx = w / 2, cy = h / 2;
+                    const unit = Math.min(w, h) * 0.04;
+
+                    parchmentGrain(ctx, w, h, 2, GOLD, 0.02);
+
+                    // Large subtle Flower of Life at center
+                    ctx.lineWidth = 0.4;
+                    flowerRing(ctx, cx, cy, unit * 5, TEAL, 0.04);
+                    // Second ring — larger, rotated 30°
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.rotate(Math.PI / 6);
+                    ctx.lineWidth = 0.3;
+                    for (let i = 0; i < 6; i++) {
+                        const a = Math.PI / 3 * i;
+                        ctx.strokeStyle = rgba(GOLD, 0.04);
+                        circle(ctx, Math.cos(a) * unit * 5, Math.sin(a) * unit * 5, unit * 5);
+                    }
+                    ctx.restore();
+
+                    // Corner arcs — top-right and bottom-left
+                    ctx.lineWidth = 0.5;
+                    for (let i = 1; i <= 6; i++) {
+                        ctx.strokeStyle = rgba(TEAL, 0.03);
+                        arc(ctx, w, 0, unit * 4 * i, Math.PI * 0.5, Math.PI);
+                        arc(ctx, 0, h, unit * 4 * i, -Math.PI * 0.5, 0);
+                    }
+
+                    // Golden ratio rectangles
+                    ctx.strokeStyle = rgba(GOLD, 0.04);
+                    ctx.lineWidth = 0.3;
+                    let rw = unit * 12, rh = rw / PHI;
+                    let rx = cx - rw / 2, ry = cy - rh / 2;
+                    for (let i = 0; i < 5; i++) {
+                        ctx.strokeRect(rx, ry, rw, rh);
+                        const nw = rh; const nh = nw / PHI;
+                        rx = rx + rw - nw; ry = ry + rh - nh;
+                        rw = nw; rh = nh;
+                    }
+                }
+
+                function drawCTA(ctx, w, h, t) {
+                    const cx = w / 2, cy = h / 2;
+                    const unit = Math.min(w, h) * 0.045;
+
+                    parchmentGrain(ctx, w, h, 5, GOLD, 0.03);
+
+                    // Central sacred mandala
+                    // Ring 1: concentric circles with alternating weight
+                    for (let i = 1; i <= 10; i++) {
+                        ctx.lineWidth = i % 3 === 0 ? 1.2 : 0.4;
+                        ctx.strokeStyle = rgba(TEAL, 0.04 + 0.012 * (10 - i));
+                        circle(ctx, cx, cy, unit * i * 1.2);
+                    }
+
+                    // Ring 2: Flower of Life
+                    ctx.lineWidth = 0.6;
+                    flowerRing(ctx, cx, cy, unit * 3, GOLD, 0.1);
+
+                    // Ring 3: vesica at center, larger
+                    ctx.lineWidth = 1.5;
+                    vesicaPiscis(ctx, cx, cy, unit * 4, TEAL, 0.08);
+
+                    // Radiating petal ellipses — 12-fold symmetry
+                    ctx.lineWidth = 0.5;
+                    for (let i = 0; i < 12; i++) {
+                        const a = (Math.PI * 2 / 12) * i + t * 0.00008;
+                        ctx.save();
+                        ctx.translate(cx, cy);
+                        ctx.rotate(a);
+                        ctx.strokeStyle = rgba(GOLD, 0.06);
+                        ctx.beginPath();
+                        ctx.ellipse(unit * 5, 0, unit * 5, unit * 1.2, 0, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+
+                    // Outer golden spirals at the four quadrants
+                    ctx.lineWidth = 0.6;
+                    const corners = [[0, 0], [w, 0], [0, h], [w, h]];
+                    corners.forEach(([ox, oy], idx) => {
+                        const dir = idx % 2 === 0 ? 1 : -1;
+                        goldenSpiral(ctx, ox, oy, unit * 5, 2, dir, GOLD, 0.04);
+                    });
+                }
+
+                /* ═══════════════════════════════════════════════
+                   Initialization & animation loop
+                   ═══════════════════════════════════════════════ */
+
+                const RENDERERS = {
+                    hero: drawHero,
+                    timeline: drawTimeline,
+                    card: drawCard,
+                    banner: drawBanner,
+                    stats: drawStats,
+                    cta: drawCTA,
+                };
+
+                const entries = [];  // { canvas, ctx, variant, w, h }
+
+                function setup() {
+                    document.querySelectorAll('.sacred-geometry-canvas').forEach(canvas => {
+                        const ctx = canvas.getContext('2d');
+                        const parent = canvas.parentElement;
+                        const variant = canvas.dataset.variant || 'hero';
+                        const entry = { canvas, ctx, variant, w: 0, h: 0, parent };
+                        entries.push(entry);
+                        sizeCanvas(entry);
+                    });
+                    window.addEventListener('resize', () => entries.forEach(sizeCanvas));
+                    requestAnimationFrame(tick);
+                }
+
+                function sizeCanvas(e) {
+                    const rect = e.parent.getBoundingClientRect();
+                    const dpr = window.devicePixelRatio || 1;
+                    e.canvas.width = rect.width * dpr;
+                    e.canvas.height = rect.height * dpr;
+                    e.canvas.style.width = rect.width + 'px';
+                    e.canvas.style.height = rect.height + 'px';
+                    e.w = rect.width;
+                    e.h = rect.height;
+                    e.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                }
+
+                let lastResize = 0;
+                function tick(ts) {
+                    // Re‑render every ~100 ms for subtle animation
+                    if (ts - lastResize > 100) {
+                        entries.forEach(e => {
+                            e.ctx.clearRect(0, 0, e.w, e.h);
+                            const fn = RENDERERS[e.variant];
+                            if (fn) fn(e.ctx, e.w, e.h, ts);
+                        });
+                        lastResize = ts;
+                    }
+                    requestAnimationFrame(tick);
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => setTimeout(setup, 60));
+                } else {
+                    setTimeout(setup, 60);
+                }
+            })();
+    </script>
 </body>
 
 </html>
